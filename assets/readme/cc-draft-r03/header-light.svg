@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 544" width="760" height="544">
+  <!-- Editable source. Text uses macOS Songti SC and Helvetica Neue; the README links the PNG rendered from this file. -->
+  <title>禁止倒屎文件</title>
+  <desc>禁倒发〔2026〕0.1.0 号。关于 Agent 推送代码、新建仓库、开 Issue、提 PR 须经用户本人逐笔授权的通知。STOP-PUSHING-SHIT: Agents propose. You dispose. 各 Agent：写代码、改文件、打草稿，一律照常。唯推送代码、新建 GitHub仓库、开 Issue、提 PR（以本插件识别者为准），须先呈用户过目；经用户另发整条“授权提交”，方可原样执行一次。特此通知。</desc>
+  <!-- masthead, condensed like a printed red-header -->
+  <text transform="translate(380.0 104) scale(0.86 1)" text-anchor="middle" font-family="Songti SC" font-weight="900" font-size="88" letter-spacing="12" fill="#D51F1F">禁止倒屎文件</text>
+  <text x="380.0" y="152" text-anchor="middle" font-family="Songti SC" font-size="19" fill="#1F2328">禁倒发〔2026〕0.1.0 号</text>
+  <g stroke="#D51F1F" stroke-width="3" fill="none">
+    <path d="M30 168 H359.0 M401.0 168 H730"/>
+    <circle cx="380.0" cy="168" r="9.5"/>
+    <path d="M373.4 174.7 L386.6 161.3" stroke-linecap="round"/>
+  </g>
+  <g font-family="Songti SC" font-weight="900" font-size="28" letter-spacing="1" fill="#1F2328" text-anchor="middle">
+    <text x="380.0" y="222">关于 Agent 推送代码、新建仓库、开 Issue、提 PR</text>
+    <text x="380.0" y="264">须经用户本人逐笔授权的通知</text>
+  </g>
+  <text x="380.0" y="302" text-anchor="middle" font-family="Helvetica Neue" font-weight="600" font-size="14" letter-spacing="2.5" fill="#1F2328">STOP-PUSHING-SHIT</text>
+  <!-- CoreSVG ignores font-style, so the tagline is slanted by hand -->
+  <text transform="translate(380.0 324) skewX(-11)" text-anchor="middle" font-family="Helvetica Neue" font-size="16" fill="#59636E">Agents propose. You dispose.</text>
+  <g font-family="Songti SC" font-size="22" fill="#1F2328">
+    <text x="44" y="368">各 Agent：</text>
+    <text x="88" y="406">写代码、改文件、打草稿，一律照常。唯推送代码、新建 GitHub</text>
+    <text x="44" y="444">仓库、开 Issue、提 PR（以本插件识别者为准），须先呈用户过目；</text>
+    <text x="44" y="482">经用户另发整条“授权提交”，方可原样执行一次。</text>
+    <text x="88" y="520">特此通知。</text>
+  </g>
+</svg>

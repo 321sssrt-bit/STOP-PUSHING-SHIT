@@ -1,0 +1,67 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/bin/sh \"$PLUGIN_ROOT/hooks/run.sh\"",
+            "timeout": 5,
+            "additionalContextLimit": 1500,
+            "commandWindows": "powershell.exe -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command \"& (Join-Path ([Environment]::GetEnvironmentVariable('PLUGIN_ROOT')) 'hooks/run.ps1')\""
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/bin/sh \"$PLUGIN_ROOT/hooks/run.sh\"",
+            "timeout": 5,
+            "additionalContextLimit": 1500,
+            "commandWindows": "powershell.exe -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command \"& (Join-Path ([Environment]::GetEnvironmentVariable('PLUGIN_ROOT')) 'hooks/run.ps1')\""
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/bin/sh \"$PLUGIN_ROOT/hooks/run.sh\"",
+            "timeout": 5,
+            "additionalContextLimit": 1500,
+            "commandWindows": "powershell.exe -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command \"& (Join-Path ([Environment]::GetEnvironmentVariable('PLUGIN_ROOT')) 'hooks/run.ps1')\""
+          }
+        ]
+      }
+    ],
+    "Interrupt": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/bin/sh \"$PLUGIN_ROOT/hooks/run.sh\"",
+            "timeout": 3,
+            "commandWindows": "powershell.exe -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command \"& (Join-Path ([Environment]::GetEnvironmentVariable('PLUGIN_ROOT')) 'hooks/run.ps1')\""
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/bin/sh \"$PLUGIN_ROOT/hooks/run.sh\"",
+            "timeout": 5,
+            "commandWindows": "powershell.exe -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command \"& (Join-Path ([Environment]::GetEnvironmentVariable('PLUGIN_ROOT')) 'hooks/run.ps1')\""
+          }
+        ]
+      }
+    ]
+  }
+}
