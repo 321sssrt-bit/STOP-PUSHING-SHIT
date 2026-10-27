@@ -388,7 +388,7 @@ func TestHookConfiguration(t *testing.T) {
 	if err = json.Unmarshal(b, &config); err != nil {
 		t.Fatal(err)
 	}
-	for _, event := range []string{"SessionStart", "SubagentStart", "UserPromptSubmit", "Interrupt", "PreToolUse"} {
+	for _, event := range []string{"SessionStart", "UserPromptSubmit", "Interrupt", "PreToolUse"} {
 		groups := config.Hooks[event]
 		if len(groups) != 1 || len(groups[0].Hooks) != 1 {
 			t.Fatal(event)

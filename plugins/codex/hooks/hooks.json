@@ -5,19 +5,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "/bin/sh \"$PLUGIN_ROOT/hooks/run.sh\"",
-            "timeout": 5,
-            "additionalContextLimit": 1500,
-            "commandWindows": "powershell.exe -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command \"& (Join-Path ([Environment]::GetEnvironmentVariable('PLUGIN_ROOT')) 'hooks/run.ps1')\""
-          }
-        ]
-      }
-    ],
-    "SubagentStart": [
-      {
-        "hooks": [
-          {
-            "type": "command",
+            "statusMessage": "禁止倒屎 · 开始或恢复聊天",
             "command": "/bin/sh \"$PLUGIN_ROOT/hooks/run.sh\"",
             "timeout": 5,
             "additionalContextLimit": 1500,
@@ -31,6 +19,7 @@
         "hooks": [
           {
             "type": "command",
+            "statusMessage": "禁止倒屎 · 接收本次授权",
             "command": "/bin/sh \"$PLUGIN_ROOT/hooks/run.sh\"",
             "timeout": 5,
             "additionalContextLimit": 1500,
@@ -44,6 +33,7 @@
         "hooks": [
           {
             "type": "command",
+            "statusMessage": "禁止倒屎 · 中断时撤销授权",
             "command": "/bin/sh \"$PLUGIN_ROOT/hooks/run.sh\"",
             "timeout": 3,
             "commandWindows": "powershell.exe -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command \"& (Join-Path ([Environment]::GetEnvironmentVariable('PLUGIN_ROOT')) 'hooks/run.ps1')\""
@@ -56,6 +46,7 @@
         "hooks": [
           {
             "type": "command",
+            "statusMessage": "禁止倒屎 · 提交前检查",
             "command": "/bin/sh \"$PLUGIN_ROOT/hooks/run.sh\"",
             "timeout": 5,
             "commandWindows": "powershell.exe -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command \"& (Join-Path ([Environment]::GetEnvironmentVariable('PLUGIN_ROOT')) 'hooks/run.ps1')\""

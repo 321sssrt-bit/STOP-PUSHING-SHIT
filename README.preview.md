@@ -11,7 +11,7 @@
 
 没品的 Agent 就是这样：闭着眼推代码、建仓库、报 Issue、提 PR，一气呵成，头也不回。被人当垃圾关掉，丢的是你的脸；被认定刷屏，受限甚至封号，赔的是你的账号。
 
-禁止倒屎是一个 Codex 插件，专把它认得出的推送、建仓、Issue、PR 请求拦在门口：具体内容先摆到你面前，你另发一句“授权提交”，这一笔才出门。
+禁止倒屎是一个 Codex 插件，专把它认得出的推送、建仓、Issue、PR 请求拦在门口：这一笔的明细先摆到你面前，你另发一句“授权提交”，这一笔才出门。
 
 发出“授权提交”之前，也问问自己：**今天交出去的，是狗屎吗？**
 
@@ -23,7 +23,7 @@
 
 ## 二、怎么批
 
-1. Agent 发起已识别的推送或创建请求，插件先扣下：什么都没发出去，具体内容摆到你面前。
+1. Agent 发起已识别的推送或创建请求，插件先扣下，把这一笔的明细摆到你面前；这时什么都还没发出去。
 2. 你看完，另发一条消息，整条只写 `授权提交`。
 3. Agent 原样重试，这一笔执行一次。
 
@@ -32,8 +32,10 @@
 <details>
 <summary>细则</summary>
 
-- 授权只认当前待审阅的这一笔，绑定它的全部内容，用一次即作废。
+- 授权只认同一聊天里当前待审阅的这一笔，只在当前轮次原样执行一次；执行前就已用掉，失败也不能再用。
 - 消息必须整条只有 `授权提交`，前后加字、引号或附加要求都不算。
+- 推送的明细包括仓库、remote 地址、来源提交、目标分支、提交列表和文件改动摘要；重试时会核对提交有没有变。
+- 只有单独一条 `git push <remote> <分支>` 能授权（可带 `-C`、`-u`、`--force`、`--force-with-lease`；用 refspec 时目标写全 `refs/heads/…`）。不写目标、批量、推标签、删分支、组合或动态拼出来的推送，一律拒绝。
 - 新建和模板建仓须写明 `name` 与 `private`（`true` / `false`），不猜默认可见性；没写归属时，用创建工具当前认证的账户。
 - fork 绑定源仓库 `owner/repo`、目标组织等全部参数，可见性继承源仓库；插件不联网查询，请自行核实。
 
@@ -43,11 +45,14 @@
 
 把下面的命令发给你的 Agent：
 
-```text
-INSTALL_COMMANDS_PENDING
+```sh
+codex plugin marketplace add 321sssrt-bit/STOP-PUSHING-SHIT
+codex plugin add issue-pr-guard@stop-pushing-shit
 ```
 
 装好后开一个新聊天，在 `/hooks` 里审阅并信任本插件的 Hook。
+
+要停用或卸载，见[卸载说明](plugins/codex/INSTALL.md)。
 
 ## 附则
 
@@ -60,8 +65,7 @@ INSTALL_COMMANDS_PENDING
 <br>
 
 <p align="right">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/readme/cc-draft-r01/signoff-dark.png">
-    <img src="assets/readme/cc-draft-r01/signoff-light.png" width="340" alt="落款：禁止倒屎办公室，二〇二六年十月二十七日，盖有“授权提交专用章”。">
-  </picture>
+  禁止倒屎办公室<br>
+  <sub>二〇二六年十月二十七日</sub><br>
+  <img src="assets/readme/avatar-seal/zebro-seal.png" width="180" alt="以 Zebro 的 GitHub 斑马头像制作的红色授权提交专用章。">
 </p>

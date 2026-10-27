@@ -9,6 +9,8 @@ codex plugin add issue-pr-guard@stop-pushing-shit
 
 装好后开一个新聊天，在 `/hooks` 中审阅并信任本插件。当前仓库为私有，安装时需使用有访问权限的 GitHub 账户。
 
+审查窗口中，本插件有四项以“禁止倒屎”开头的 Hook：开始或恢复聊天、接收本次授权、中断时撤销授权、提交前检查。它们共用一个程序，分别在对应时机运行。
+
 同一份插件自动选择 macOS / Linux 的 ARM64、x86-64 或 Windows x86-64 程序。无需另装 Python、Go、Node 或启动服务；原生 Windows 需要支持 `commandWindows` 的 Codex。
 
 创建 GitHub 仓库、Issue、PR，或执行已识别的 `git push` 时，先看完整请求，再另发一条消息：`授权提交`。只授权当前这一笔一次；内容变化、执行失败都要重新授权。
