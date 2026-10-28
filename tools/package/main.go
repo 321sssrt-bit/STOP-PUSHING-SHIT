@@ -44,7 +44,10 @@ func main() {
 		contents := map[string][]byte{
 			".agents/plugins/marketplace.json": read(filepath.Join(pluginRoot, "marketplace.json")),
 			"plugin/.codex-plugin/plugin.json": manifest,
-			"INSTALL.md":                       read(filepath.Join(pluginRoot, "INSTALL.md")), "THIRD_PARTY_NOTICES.txt": read("THIRD_PARTY_NOTICES.txt"), name: binary,
+			"INSTALL.md":                       read(filepath.Join(pluginRoot, "INSTALL.md")),
+			"LICENSE":                          read("LICENSE"),
+			"THIRD_PARTY_NOTICES.txt":          read("THIRD_PARTY_NOTICES.txt"),
+			name:                               binary,
 		}
 		if target == "universal" {
 			delete(contents, name)
