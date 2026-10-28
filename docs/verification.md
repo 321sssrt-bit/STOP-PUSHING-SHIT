@@ -16,7 +16,7 @@
 
 - 当前源码的核心授权、推送、Python 识别及并发定向检查：199 项测试事件通过，零失败、零跳过。
 - 更新安装说明和 MIT 许可后，六个 ZIP 的文档、许可和程序字节已核对；macOS arm64 单平台包与 universal 包的原生包测试通过。
-- GitHub `main` 的 marketplace 指向 `plugins/codex`，正式中英文文档使用这一真实入口。仓库根目录已补齐对应清单及五个平台程序；使用本地 Git 源、隔离 Codex 和临时提交验证稀疏拉取、marketplace 安装与 macOS arm64 原生启动。同一安装目录的隔离宿主测试通过；远端 `main` 的下载安装留待提交推送后复核。
+- GitHub `main` 的 marketplace 指向 `plugins/codex`，正式中英文文档使用这一真实入口。已从真实 GitHub `main` 稀疏拉取并在隔离 Codex 中成功安装、启用插件；Linux arm64 原生启动通过，安装程序与提交内程序逐字节一致。此前本地 Git 源的 macOS arm64 安装及隔离宿主测试也已通过。
 - 本轮没有重新进行 Linux、Windows 远端测试，也不将历史结果视为新一轮验收。
 
 [返回首页](../README.md) · [English](../README.en.md)
