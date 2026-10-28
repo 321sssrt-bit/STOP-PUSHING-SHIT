@@ -1,2 +1,57 @@
-dist/
+# Build outputs and installed executables.
+/dist/
+/bin/
 .DS_Store
+
+# Local QA output stays at its original path.
+/docs/*.json
+/docs/*.jsonl
+/docs/*.log
+/docs/go-build-results.txt
+/docs/audit-rework-2026-10-27/
+/docs/python-execution-fix-2026-10-27/
+/docs/repository-creation-2026-10-27/
+/docs/repository-layout-2026-10-27/
+/docs/acceptance-0.1.0-private-2026-10-27/
+
+# Local drafts and historical source; keep files without publishing them.
+/README.cc-draft*.md
+/archive/
+
+# Design candidates and production files. Current README assets stay visible.
+/assets/icon/README.md
+/assets/icon/icon-*
+/assets/icon/render-icon.swift
+/assets/icon/references/
+/assets/icon/redesign/agent-stop-v3/
+/assets/icon/redesign/agent-stop-v4/README.md
+/assets/icon/redesign/icon-v2-*.png
+/assets/icon/redesign/opus-r01/
+/assets/icon/redesign/opus-r02/
+/assets/icon/redesign/render-options.swift
+/assets/readme/avatar-seal/*
+!/assets/readme/avatar-seal/zebro-seal.png
+/assets/readme/cc-draft-*/
+!/assets/readme/cc-draft-r03/
+/assets/readme/cc-draft-r03/*
+!/assets/readme/cc-draft-r03/header-light.png
+!/assets/readme/cc-draft-r03/header-dark.png
+!/assets/readme/cc-draft-r03/header-light.svg
+!/assets/readme/cc-draft-r03/header-dark.svg
+
+# Historical reports remain local; active documentation stays visible.
+/docs/acceptance-0.1.0-private-2026-10-27.md
+/docs/audit-fixes-2026-10-27.md
+/docs/audit-recheck-2026-10-27-rework.md
+/docs/audit-rework-results-2026-10-27.md
+/docs/go-review.md
+/docs/go-validation.md
+/docs/independent-qa-2026-10-27.md
+/docs/minimal-review.md
+/docs/python-execution-fix-2026-10-27.md
+/docs/repository-creation-2026-10-27.md
+/docs/repository-hygiene-2026-10-27.md
+/docs/repository-layout-2026-10-27.md
+/docs/validation-v0.1.0.md
+/docs/validation-v0.2.0.md
+/docs/validation.md

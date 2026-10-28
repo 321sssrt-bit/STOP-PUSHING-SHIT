@@ -57,4 +57,4 @@ Shell 语法树处理注释、heredoc 及命令替换；quoted heredoc 的文本
 
 ## 验证说明
 
-当前验证结果与边界见[首页](../README.md#验证情况)，工具链、构建和测试命令见 [Go 开发记录](go-development.md)。历史报告与原始证据在本地原位保留，不随源码提交。
+当前验证结果与边界见[验证说明](verification.md)，工具链、构建和测试命令见 [Go 开发记录](go-development.md)。历史报告与原始证据在本地原位保留，不随源码提交。

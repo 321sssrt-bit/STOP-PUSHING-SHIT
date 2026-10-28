@@ -1,6 +1,6 @@
 # Codex 首版
 
-当前版本为 **0.1.0**，以 [.codex-plugin/plugin.json](.codex-plugin/plugin.json) 为准。安装步骤见 [INSTALL.md](INSTALL.md)，验收结果与边界见[首页](../../README.md#验证情况)。
+当前版本为 **0.1.0**，以 [.codex-plugin/plugin.json](.codex-plugin/plugin.json) 为准。安装步骤见 [INSTALL.md](INSTALL.md)，验收结果与边界见[验证说明](../../docs/verification.md)。
 
 安装形态采用 Codex 社区 marketplace，正式入口为 GitHub 仓库的 `main` 分支，具体命令见 [INSTALL.md](INSTALL.md)。该分发入口携带五个平台的原生程序，由启动脚本选择。`dist/codex/` 是本地 ZIP 打包输出目录；独立 ZIP 以 [GitHub Releases](https://github.com/321sssrt-bit/STOP-PUSHING-SHIT/releases) 中列出的附件为准。用户端无需增加语言运行时或服务。
 

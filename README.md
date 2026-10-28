@@ -1,152 +1,77 @@
-<div align="center">
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/readme/cc-draft-r03/header-dark.png">
+    <img src="assets/readme/cc-draft-r03/header-light.png" width="760" alt="禁止倒屎文件。禁倒发〔2026〕0.1.0 号。关于 Agent 推送代码、新建仓库、开 Issue、提 PR 须经用户本人逐笔授权的通知。STOP-PUSHING-SHIT：Agents propose. You dispose. 各 Agent：写代码、改文件、打草稿，一律照常。唯推送代码、新建 GitHub 仓库、开 Issue、提 PR（以本插件识别者为准），须先呈用户过目；经用户另发整条“授权提交”，方可原样执行一次。特此通知。">
+  </picture>
+</p>
 
-<img src="assets/icon/redesign/agent-stop-v4/icon.png" width="240" alt="一个兴冲冲推着便便的 AI 机器人，被红色停止手掌拦住。" />
+<p align="center"><strong>简体中文</strong> · <a href="README.en.md">English</a></p>
 
-<h1>STOP-PUSHING-SHIT</h1>
-<p><strong>简体中文</strong> · <a href="README.en.md">English</a></p>
-<p><strong>禁止倒屎 · 代码先写，推送、建仓、Issue / PR 先问。</strong></p>
-<p><em>Write first. Ask before you post.</em></p>
-<p><sub>CODEX · v0.1.0 · MIT · 本地 HOOK</sub></p>
-<p><a href="#怎么工作">怎么工作</a> · <a href="#安装">安装</a> · <a href="#覆盖与边界">覆盖与边界</a> · <a href="docs/README.md">开发文档</a></p>
+<p align="center"><a href="#一管什么">管什么</a> · <a href="#二怎么批">怎么批</a> · <a href="#三怎么装">怎么装</a> · <a href="#附则">附则</a></p>
 
-</div>
+你还在看 diff，Agent 已经把 PR 开出去了，标题叫“修好了所有问题”。
 
----
+有 adhd 的 agent 就是这样：闭着眼推代码、建仓库、报 Issue、提 PR，一气呵成，头也不回。被人当垃圾关掉，丢的是你的脸；被认定刷屏，受限甚至封号，赔的是你的账号。
 
-你还在审阅，Agent 已经推了代码、建了仓库，或把 Issue / PR 发出去了。
+禁止倒屎是一个 Codex 插件，专把它认得出的推送、建仓、Issue、PR 请求拦在门口：这一笔的明细先摆到你面前，你另发一句“授权提交”，这一笔才出门。
 
-**STOP-PUSHING-SHIT** 在已识别的推送或创建请求执行前拦住它，把完整内容交给你审阅。你另发一条 `授权提交`，才放行这一笔。
+发出“授权提交”之前，也问问自己：**今天交出去的，是狗屎吗？**
 
-首版面向 **Codex**，按社区 marketplace 方式安装。每台设备只需对应平台的原生程序，无需 Python、Go、Node，也不用单独启动服务。
+## 一、管什么
 
-> [GitHub 源码](https://github.com/321sssrt-bit/STOP-PUSHING-SHIT) · [Releases 下载](https://github.com/321sssrt-bit/STOP-PUSHING-SHIT/releases) · [MIT 许可证](LICENSE)
+- **扣下等授权：** 已识别的 `git push`，以及 GitHub 新建仓库（含 fork、模板建仓）、开 Issue、提 PR（含 draft）。
+- **直接挡回：** 已识别的 `gh`、REST、GraphQL 创建命令，要求改用结构化创建工具。
+- **照常进行：** 本地 `git init`、`git clone`、查询、编辑。
 
-## 怎么工作
+## 二、怎么批
 
-![先拦住，用户审阅并独立授权，再放行原始请求一次；失败也不能复用授权。](assets/readme/permission-flow.svg)
+1. Agent 发起已识别的推送或创建请求，插件先扣下，把这一笔的明细摆到你面前；这时什么都还没发出去。
+2. 你看完，另发一条消息，整条只写 `授权提交`。
+3. Agent 原样重试，这一笔执行一次。
 
-1. **先展示。** Agent 发起已识别的请求，插件先拒绝执行，返回待审阅的完整内容：推送的目标、分支、提交和改动摘要，或建仓、Issue / PR 的全部参数。
-2. **你授权。** 审阅后，另发一条消息，整条准确写 `授权提交`，不用填写编号，也不能附加空格、换行或其他文字。
-3. **只执行一次。** 同一笔参数原样重试，放行一次；参数改变或调用失败，都需要重新授权。
-
-新建仓库须明确 `private: true/false`，不能依赖工具默认值。fork 与模板建仓同样受限；名称、归属、可见性或其他参数改变，都需要重新授权。
-
-推送使用单独一条 `git push <remote> <分支>`。插件核对目标地址、来源提交、目标分支、提交列表及文件改动摘要；提交变化也要重新授权。支持 `-C`、`-u`、`--force`、`--force-with-lease`；显式 refspec 的目标须写全 `refs/heads/...`。批量、标签、删除、隐含目标、动态或组合推送暂不放行。
-
-“继续”“修好”“最后帮我提交”不会代替这次授权。查询、本地 `git init`、clone、编辑和准备草稿可以照常进行。
+内容改了或执行失败，都要重新授权。“继续”“修好”“最后提交”不算数。
 
 <details>
-<summary><strong>看一个最小例子</strong></summary>
+<summary>细则</summary>
 
-Agent 准备创建一个 draft PR：
-
-```text
-仓库    example/project
-标题    补充安装说明
-正文    补充平台选择、插件安装和单次授权说明。
-分支    docs/install → main
-Draft   true
-```
-
-插件会先返回“尚未提交”和完整参数。审阅后，另发一条消息：
-
-```text
-授权提交
-```
-
-这只授权眼前这一笔。下一次创建、参数变化，或者本次调用失败后再试，都需要重新授权。
-
-以上是流程示意，不是真实 GitHub 操作。
+- 授权只认同一聊天里当前待审阅的这一笔，只在当前轮次原样执行一次；执行前就已用掉，失败也不能再用。
+- 消息必须整条只有 `授权提交`，前后加字、引号或附加要求都不算。
+- 推送的明细包括仓库、remote 地址、来源提交、目标分支、提交列表和文件改动摘要；重试时会核对提交有没有变。
+- 只有单独一条 `git push <remote> <分支>` 能授权（可带 `-C`、`-u`、`--force`、`--force-with-lease`；用 refspec 时目标写全 `refs/heads/…`）。不写目标、批量、推标签、删分支、组合或动态拼出来的推送，一律拒绝。
+- 新建和模板建仓须写明 `name` 与 `private`（`true` / `false`），不猜默认可见性；没写归属时，用创建工具当前认证的账户。
+- fork 绑定源仓库 `owner/repo`、目标组织等全部参数，可见性继承源仓库；插件不联网查询，请自行核实。
 
 </details>
 
-## 安装
+## 三、怎么装
 
-**从正式 GitHub 仓库安装。** 在已安装 Codex 的终端运行：
+把下面的命令发给你的 Agent：
 
 ```sh
 codex plugin marketplace add 321sssrt-bit/STOP-PUSHING-SHIT --ref main --sparse .agents/plugins --sparse plugins/codex
 codex plugin add issue-pr-guard@stop-pushing-shit
 ```
 
-该入口携带五个平台程序，启动时自动选择当前设备对应的程序。两项 `--sparse` 保留 marketplace 和插件目录，减少无关源码与图片下载；它不会把通用包变成单平台下载。仓库为私有时，安装所用的 GitHub 账户须有访问权限。
+装好后开一个新聊天，在 `/hooks` 里审阅并信任本插件的 Hook。
 
-开启新聊天，在 `/hooks` 中审阅并信任本插件的四项 Hook：开始或恢复聊天、接收本次授权、中断时撤销授权、提交前检查。它们都以“禁止倒屎”开头，共用一个程序。**安装成功后，还需要让 Hook 生效。**
+无需另装 Python、Go、Node，也不用单独启动服务。仓库为私有时，安装账号须有访问权限。
 
-<details>
-<summary>单平台 ZIP 安装（可选）</summary>
+要停用或卸载，见[卸载说明](plugins/codex/INSTALL.md)。
 
-如果 [GitHub Release](https://github.com/321sssrt-bit/STOP-PUSHING-SHIT/releases) 附带 ZIP，也可以下载设备对应的平台包。每台设备只需一份程序。
+## 附则
 
-| 你的设备 | 平台 | ZIP 大小 | 解压后 |
-|---|---|---:|---:|
-| Mac · Apple Silicon | `darwin-arm64` | 1.86 MB | 4.49 MB |
-| Mac · Intel | `darwin-amd64` | 2.01 MB | 4.75 MB |
-| Linux · ARM64 | `linux-arm64` | 1.87 MB | 4.51 MB |
-| Linux · x86-64 | `linux-amd64` | 2.05 MB | 4.82 MB |
-| Windows · x86-64 | `windows-amd64` | 2.15 MB | 5.07 MB |
+**第一条**　本插件只覆盖它能识别的路径，识别不了的就管不到。它是一道本地护栏，不是安全沙箱。
 
-包名格式：`STOP-PUSHING-SHIT-0.1.0-<平台>.zip`。大小按十进制 MB 计，不含 Codex 自身及安装缓存；草稿、视觉制作文件和验收报告均不在包内。
+**第二条**　开发者能力有限，漏网之鱼肯定还有。欢迎更强的开发者来一起完善；提 PR 之前，请先自己审一遍。
 
-解压到准备长期保留的目录，在已安装 Codex 的终端运行：
+**第三条**　本通知自 Hook 生效之日起施行，最终解释权归你。
 
-```sh
-codex plugin marketplace add '<解压目录>'
-codex plugin add issue-pr-guard@stop-pushing-shit
-```
+<br>
 
-安装后同样需要开启新聊天，在 `/hooks` 中审阅并信任插件。
+<p align="right">
+  禁止倒屎办公室<br>
+  <sub>二〇二六年十月二十七日</sub><br>
+  <img src="assets/readme/avatar-seal/zebro-seal.png" width="180" alt="以 Zebro 的 GitHub 斑马头像制作的红色授权提交专用章。">
+</p>
 
-`universal` 包保留作可选离线合集，包含五个平台程序：ZIP 9.89 MB，解压后 23.45 MB；日常安装选择上表的单平台包即可。
-
-</details>
-
-[完整安装、停用与卸载说明 →](plugins/codex/INSTALL.md)
-
-## 覆盖与边界
-
-| 场景 | 首版行为 |
-|---|---|
-| 单独、静态、明确目标的分支 `git push` | 展示推送明细，等待单次授权；重试前核对提交与参数 |
-| 结构化工具创建仓库、Issue / PR，包括 fork、模板建仓和 draft PR | 展示完整参数，等待单次授权 |
-| 已识别的 gh、REST、GraphQL 创建命令 | 阻止，要求改用结构化创建工具 |
-| 已覆盖的 Python、Shell、PowerShell / CMD 包装 | 检查其中可识别的创建调用 |
-| 查询、本地编辑、准备草稿 | 不追加创建授权 |
-
-**这是已覆盖路径上的本地护栏，不是完整安全沙箱。** Node 启动 gh、浏览器操作、磁盘脚本内部、未知工具和未加载 Hook 的路径仍可能不受约束。动态命令也可能被保守拒绝。
-
-插件不联网、不读取凭证；待审阅参数保存在宿主分配的本地数据目录。完整的绑定规则、撤销条件和已知边界见 [行为说明](docs/behavior.md)。
-
-## 验证情况
-
-0.1.0 的授权、推送相关测试及单次消费、并发 race 检查已通过。分平台安装的最近一次验证结果如下：
-
-| 平台 | 首次安装与升级 | 原生启动 | 只获取对应平台程序 |
-|---|---|---|---|
-| macOS arm64 / Linux arm64 / Windows amd64 | 真实 Codex 隔离验证通过 | 通过 | 通过 |
-| macOS amd64 / Linux amd64 | 在 macOS 上完成包选择与升级检查 | 本轮未原生运行 | 通过 |
-
-表中分平台验证使用支持按需拉取的本地 Git 测试仓库；正式 `main` 入口使用五平台通用分发，不套用分平台下载体积结论。
-
-此前私仓安装验证中，测试程序模拟独立用户授权后，实际分支推送、Issue、draft PR 各执行一次，重复请求被拒绝。确定性假模型宿主测试也已通过；这些结果不等于真实模型自主操作或 GitHub connector 验收，日常桌面 Hook 信任流程仍需用户确认。
-
-## 接下来
-
-| 阶段 | 状态 |
-|---|---|
-| **Codex 首版** | 0.1.0；支持推送、建仓、Issue / PR 的单次授权 |
-| **DSH 第二版** | 已预留接入目录，等待实际接口确认 |
-
-运行实现保留一份，宿主入口放在 `plugins/`。正式安装使用上面的 GitHub marketplace 命令；独立 ZIP 以 [GitHub Releases](https://github.com/321sssrt-bit/STOP-PUSHING-SHIT/releases) 中列出的附件为准。
-
-[仓库结构](plugins/README.md) · [开发与打包](docs/go-development.md) · [开发文档](docs/README.md)
-
-项目采用 [MIT 许可证](LICENSE)；第三方依赖的许可见 [THIRD_PARTY_NOTICES.txt](THIRD_PARTY_NOTICES.txt)。
-
----
-
-<div align="center">
-
-<p><strong>让 Agent 把内容写好。发不发，你决定。</strong></p>
-
-</div>
+<p align="center"><sub><a href="LICENSE">MIT 许可证</a> · <a href="docs/verification.md">验证说明</a> · <a href="docs/README.md">开发文档</a></sub></p>
