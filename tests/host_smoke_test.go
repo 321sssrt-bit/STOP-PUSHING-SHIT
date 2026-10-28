@@ -1,6 +1,7 @@
 package host_test
 
 import (
+	"archive/zip"
 	"bufio"
 	"bytes"
 	"context"
@@ -201,17 +202,34 @@ func TestCodexHost(t *testing.T) {
 	}
 	market := filepath.Join(work, "market")
 	plugin := filepath.Join(market, "plugins", "codex")
-	for _, file := range []string{".codex-plugin/plugin.json", "hooks/hooks.json", "hooks/run.sh", "hooks/run.ps1"} {
-		write(filepath.Join(plugin, file), read(filepath.Join(root, "plugins", "codex", file)))
-	}
-	for _, platform := range []string{"darwin-arm64", "darwin-amd64", "linux-arm64", "linux-amd64", "windows-amd64"} {
-		suffix := ""
-		if platform == "windows-amd64" {
-			suffix = ".exe"
+	if archive := os.Getenv("SPS_RELEASE_PACKAGE"); archive != "" {
+		z, err := zip.OpenReader(archive)
+		must(err)
+		defer z.Close()
+		for _, entry := range z.File {
+			if !filepath.IsLocal(entry.Name) {
+				t.Fatal("unsafe archive path", entry.Name)
+			}
+			in, err := entry.Open()
+			must(err)
+			data, err := io.ReadAll(in)
+			must(err)
+			must(in.Close())
+			write(filepath.Join(market, entry.Name), data)
 		}
-		write(filepath.Join(plugin, "bin", platform, "issue-pr-guard"+suffix), read(filepath.Join(root, "plugins", "codex", "bin", platform, "issue-pr-guard"+suffix)))
+	} else {
+		for _, file := range []string{".codex-plugin/plugin.json", "hooks/hooks.json", "hooks/run.sh", "hooks/run.ps1"} {
+			write(filepath.Join(plugin, file), read(filepath.Join(root, "plugins", "codex", file)))
+		}
+		for _, platform := range []string{"darwin-arm64", "darwin-amd64", "linux-arm64", "linux-amd64", "windows-amd64"} {
+			suffix := ""
+			if platform == "windows-amd64" {
+				suffix = ".exe"
+			}
+			write(filepath.Join(plugin, "bin", platform, "issue-pr-guard"+suffix), read(filepath.Join(root, "plugins", "codex", "bin", platform, "issue-pr-guard"+suffix)))
+		}
+		write(filepath.Join(market, ".agents/plugins/marketplace.json"), read(filepath.Join(root, ".agents", "plugins", "marketplace.json")))
 	}
-	write(filepath.Join(market, ".agents/plugins/marketplace.json"), read(filepath.Join(root, ".agents", "plugins", "marketplace.json")))
 	self, err := os.Executable()
 	must(err)
 	marker := filepath.Join(work, "mcp-called")
@@ -332,12 +350,16 @@ supports_websockets = false
 		}
 		return id
 	}
-	pending()
-	if feedback := model.feedback(); !strings.Contains(feedback, "授权提交") || !strings.Contains(feedback, args["body"].(string)) {
-		t.Fatal("missing parameter preview", feedback)
-	}
 	resume := func(prompt string) string {
 		return run(append(common, "resume", "--skip-git-repo-check", "--json", session, prompt)...)
+	}
+	pending()
+	if os.Getenv("SPS_HOST_DIRECTORY_ONLY") == "1" {
+		testCodexDirectoryBinding(t, workspace, states[0], model, resume)
+		return
+	}
+	if feedback := model.feedback(); !strings.Contains(feedback, "授权提交") || !strings.Contains(feedback, args["body"].(string)) {
+		t.Fatal("missing parameter preview", feedback)
 	}
 	model.set(action{"mcp__fixture__create_issue", args}, action{"mcp__fixture__create_issue", args})
 	resume("授权提交")

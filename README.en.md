@@ -13,7 +13,7 @@ You're still reading the diff. The agent has already opened a PR titled "Fixed e
 
 An agent with no brakes: push the code, create a repository, file an issue, open a PR, all without looking back. When someone closes it as garbage, it's your reputation. When it's flagged as spam and the account gets restricted or banned, it's your account.
 
-STOP-PUSHING-SHIT is a Codex plugin that holds the push, repository, issue, and PR requests it recognizes at the door. It puts the details in front of you first. Only after you send a separate `授权提交` message does that one request leave.
+STOP-PUSHING-SHIT provides Codex and DSH plugins that hold the push, repository, issue, and PR requests they recognize at the door. They put the details in front of you first. Only after you send a separate `授权提交` message does that one request leave.
 
 Before you authorize it, ask yourself: **Is the thing you're about to send a pile of shit?**
 
@@ -43,7 +43,7 @@ Changed content or a failed attempt requires fresh authorization. "Continue," "f
 - Authorization applies only to the current pending request in the same chat, with identical parameters, once in the authorized turn. It is consumed before execution, even if the operation fails.
 - The entire message must be exactly `授权提交`. Extra words, spaces, line breaks, quotes, or additional instructions do not count.
 - Push details include the repository, remote URL, source commit, destination branch, commit list, and file change summary. The plugin checks whether the commits have changed before retrying.
-- Only a standalone `git push <remote> <branch>` can be authorized. `-C`, `-u`, `--force`, and `--force-with-lease` are supported; refspec destinations must use the full `refs/heads/...` form. Implicit destinations, bulk pushes, tags, branch deletion, and compound or dynamically constructed pushes are rejected.
+- In Codex, use a standalone `git -C "<absolute repository path>" push <remote> <branch>`. The current Bash hook omits the tool's execution directory, so the first `-C` must name an absolute path. `-u`, `--force`, and `--force-with-lease` are supported; refspec destinations must use the full `refs/heads/...` form. Implicit destinations, bulk pushes, tags, branch deletion, and compound or dynamically constructed pushes are rejected.
 - New repositories and template-based creation must explicitly provide `name` and `private` (`true` or `false`). Visibility is not guessed. If no owner is specified, the creation tool uses its currently authenticated account.
 - Fork authorization binds the source `owner/repo`, target organization, and all other parameters. Visibility follows the source repository; verify it yourself, because the plugin does not query the network.
 
@@ -69,6 +69,8 @@ codex plugin remove issue-pr-guard@stop-pushing-shit
 ```
 
 Uninstalling does not automatically delete local state, which may contain a pending request's body.
+
+**DSH users:** Download the matching `.tgz` from the [DSH 0.1.1 release](https://github.com/321sssrt-bit/STOP-PUSHING-SHIT/releases/tag/dsh-v0.1.1), then follow the [DSH installation guide](plugins/dsh/README.md). Supported targets are macOS ARM64, Linux ARM64, and Windows x64. DSH requires an existing DSH, Node.js, and Git installation.
 
 ## Final provisions
 

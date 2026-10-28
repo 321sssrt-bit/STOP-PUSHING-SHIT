@@ -39,6 +39,8 @@ Shell 语法树处理注释、heredoc 及命令替换；quoted heredoc 的文本
 
 识别常见 shell、Python、SSH、PowerShell 包装中的 `git push`；只允许单独、静态、明确的 `git push <remote> <分支>` 进入授权流程。支持 `-C`、工具的 `workdir`、`-u`、`--force`、`--force-with-lease`；显式 refspec 的目标须写全 `refs/heads/...`。
 
+当前 Codex 会把 Shell 调用转换为 `Bash` 钩子，并省略工具的实际 `workdir`。这条入口必须使用 `git -C "<绝对仓库路径>" push <remote> <分支>`，第一个 `-C` 就要是绝对路径；仅有会话目录不能授权推送。DSH 适配层会提供标准 Bash / PowerShell 的实际目录，因此仍支持普通 `git push`。目录解析保留链接与 `..` 的执行语义，连续 `-C` 按原顺序交给 Git 处理；审阅后链接改向到其他仓库会撤销旧授权。
+
 插件只读核对仓库、remote 地址、来源分支及提交、目标引用、本地远端跟踪提交，并显示提交列表及文件改动摘要。原样重试前重新核对；上述内容变化即重新授权。远端跟踪值是本地记录，不冒充实时远端状态。
 
 隐含目标、批量、删除、标签、多推送地址、组合命令、动态参数，以及会扩展范围的 mirror / followTags / recurseSubmodules 配置，均不进入授权流程。简写目标受 remote.push 重映射时要求写出完整 refspec。Git 配置别名、未知执行入口和同身份篡改仍属于识别边界，不保证拦截。

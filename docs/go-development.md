@@ -25,7 +25,7 @@ Go 的类型、错误处理和语法树适配增加源码量，程序包也大�
 
 ## 开发与构建
 
-当前 Go 运行实现保留在仓库根目录。Codex 清单、hooks、安装说明与 marketplace 配置集中在 `plugins/codex/`；`plugins/dsh/` 仅记录第二版接入计划。打包器当前只生成 Codex 包，输出目录为 `dist/codex/`。
+当前 Go 运行实现保留在仓库根目录。Codex 清单、hooks、安装说明与 marketplace 配置集中在 `plugins/codex/`；`plugins/dsh/` 提供 DSH 原生接入层，复用同一 Go 程序。原打包器输出 `dist/codex/`，`tools/package-dsh.mjs` 输出 `dist/dsh/`。
 
 开发需要 Go 1.26+ 和 C 编译器；本轮使用临时目录里的 Go 1.27.3、Zig 0.17.0，以及已有 Xcode clang。没有安装系统工具或改动日常 PATH。
 

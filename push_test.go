@@ -4,6 +4,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"testing"
 )
@@ -132,5 +133,123 @@ func TestPlainAuthorizationWithoutPending(t *testing.T) {
 	e := setup(t)
 	e.Turn = "turn-2"
 	prompt(t, e, "授权提交")
+	blocked(t, call(t, e))
+}
+
+func directoryLink(t *testing.T, target, link string) {
+	t.Helper()
+	if runtime.GOOS == "windows" {
+		out, err := exec.Command("cmd.exe", "/d", "/c", "mklink", "/J", link, target).CombinedOutput()
+		if err != nil {
+			t.Fatalf("create junction: %v %s", err, out)
+		}
+	} else if err := os.Symlink(target, link); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestPushDirectoryBinding(t *testing.T) {
+	a, _, _ := gitFixture(t)
+	b, _, _ := gitFixture(t)
+	sub := filepath.Join(b.Cwd, "sub")
+	if err := os.Mkdir(sub, 0700); err != nil {
+		t.Fatal(err)
+	}
+	link := filepath.Join(a.Cwd, "link")
+	directoryLink(t, sub, link)
+	// Keep ".." intact so the actual Git process, not a path helper, is the oracle.
+	relative := "link" + string(os.PathSeparator) + ".."
+	absolute := a.Cwd + string(os.PathSeparator) + relative
+	for _, tc := range []struct {
+		name    string
+		workdir string
+		dirs    []string
+	}{
+		{"plain", "", nil},
+		{"relative-workdir", relative, nil},
+		{"absolute-workdir", absolute, nil},
+		{"relative-C", "", []string{relative}},
+		{"absolute-C", "", []string{absolute}},
+		{"successive-C", "", []string{"link", ".."}},
+		{"empty-C", "", []string{"link", "", ".."}},
+		{"workdir-and-C", "link", []string{".."}},
+		{"missing-before-absolute-C", "", []string{"missing", b.Cwd}},
+		{"missing-workdir-before-absolute-C", "missing", []string{b.Cwd}},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			e := a
+			input := map[string]any{}
+			cwd := a.Cwd
+			if tc.workdir != "" {
+				input["workdir"] = tc.workdir
+				cwd = tc.workdir
+				if !filepath.IsAbs(cwd) {
+					cwd = a.Cwd + string(os.PathSeparator) + cwd
+				}
+			}
+			var prefix []string
+			command := "git"
+			for _, dir := range tc.dirs {
+				prefix = append(prefix, "-C", dir)
+				command += " -C '" + filepath.ToSlash(dir) + "'"
+			}
+			command += " push origin main"
+			input["cmd"], e.Input = command, input
+			oracle := exec.Command("git", append(prefix, "rev-parse", "--show-toplevel")...)
+			oracle.Dir = cwd
+			expected, oracleErr := oracle.Output()
+			target, err := inspectPush(e, command)
+			if oracleErr != nil {
+				if err == nil || target != nil {
+					t.Fatalf("invalid execution directory became authorizable: %+v, %v", target, err)
+				}
+				return
+			}
+			if err != nil || target == nil {
+				t.Fatalf("inspect: %v", err)
+			}
+			if target.Repository != strings.TrimSpace(string(expected)) {
+				t.Fatalf("reviewed %s; actual Git uses %s", target.Repository, expected)
+			}
+		})
+	}
+}
+
+func TestPushDirectoryRetargetRevokes(t *testing.T) {
+	e, _, _ := gitFixture(t)
+	other, _, _ := gitFixture(t)
+	link := filepath.Join(t.TempDir(), "repository")
+	directoryLink(t, e.Cwd, link)
+	e.Input = map[string]any{"cmd": "git -C '" + filepath.ToSlash(link) + "' push origin main"}
+	e = grant(t, e)
+	previous := state(t, e).Target.Push.Repository
+	if err := os.Remove(link); err != nil {
+		t.Fatal(err)
+	}
+	directoryLink(t, other.Cwd, link)
+	blocked(t, call(t, e))
+	if next := state(t, e).Target.Push.Repository; next == previous {
+		t.Fatal("retargeted directory kept the previous authorization target")
+	}
+}
+
+func TestPushCodexBashRequiresAbsoluteDirectory(t *testing.T) {
+	e, _, _ := gitFixture(t)
+	e.Tool = "Bash"
+	for _, command := range []string{"git push origin main", "git -C . push origin main", "git -C '' -C '" + filepath.ToSlash(e.Cwd) + "' push origin main"} {
+		e.Input = map[string]any{"command": command}
+		blocked(t, call(t, e))
+		e.Turn = "later"
+		prompt(t, e, "授权提交")
+		blocked(t, call(t, e))
+		if state(t, e).Target != nil {
+			t.Fatal("missing execution directory became authorizable")
+		}
+	}
+	e.Input = map[string]any{"command": "git -C '" + filepath.ToSlash(e.Cwd) + "' push origin main"}
+	e = grant(t, e)
+	if len(call(t, e)) != 0 {
+		t.Fatal("explicit absolute repository was blocked")
+	}
 	blocked(t, call(t, e))
 }

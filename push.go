@@ -104,14 +104,19 @@ func inspectPush(e Event, command any) (*PushTarget, error) {
 		return fail("请使用系统 PATH 中的 git，不执行请求参数指定的程序来核对状态。")
 	}
 	dir := e.Cwd
+	if !filepath.IsAbs(dir) {
+		return fail("缺少绝对工作目录，不能核对推送仓库。")
+	}
 	input, _ := e.Input.(map[string]any)
 	if workdir := text(input["workdir"]); workdir != "" {
 		if filepath.IsAbs(workdir) {
 			dir = workdir
 		} else {
-			dir = filepath.Join(dir, workdir)
+			// Preserve symlink/.. traversal for the process that opens the directory.
+			dir += string(filepath.Separator) + workdir
 		}
 	}
+	var gitDirs []string
 	args := argv[1:]
 	for len(args) > 0 && args[0] != "push" {
 		if args[0] == "--no-pager" {
@@ -121,12 +126,14 @@ func inspectPush(e Event, command any) (*PushTarget, error) {
 		if args[0] != "-C" || len(args) < 3 {
 			return fail("推送请使用单独的 git push <remote> <分支>；不支持覆盖 Git 配置或执行环境。")
 		}
-		if filepath.IsAbs(args[1]) {
-			dir = args[1]
-		} else {
-			dir = filepath.Join(dir, args[1])
-		}
+		// Git applies each -C in order, including empty paths and failures.
+		gitDirs = append(gitDirs, "-C", args[1])
 		args = args[2:]
+	}
+	// Codex's canonical Bash hook omits the tool workdir. DSH supplies a verified cwd.
+	if e.Tool == "Bash" && input["dsh_tool"] != "bash" && input["dsh_tool"] != "pwsh" &&
+		(len(gitDirs) < 2 || !filepath.IsAbs(gitDirs[1])) {
+		return fail("宿主未提供实际执行目录，请使用 git -C <绝对仓库路径> push <remote> <分支>。")
 	}
 	if len(args) == 0 {
 		return fail("缺少 push 参数。")
@@ -162,7 +169,8 @@ func inspectPush(e Event, command any) (*PushTarget, error) {
 	ctx, cancel := stdcontext.WithTimeout(stdcontext.Background(), 1800*time.Millisecond)
 	defer cancel()
 	git := func(a ...string) (string, error) {
-		cmd := exec.CommandContext(ctx, argv[0], append([]string{"-C", dir}, a...)...)
+		cmd := exec.CommandContext(ctx, argv[0], append(append([]string{}, gitDirs...), a...)...)
+		cmd.Dir = dir
 		out, err := cmd.Output()
 		if err != nil {
 			return "", fmt.Errorf("无法只读核对 Git 状态（%s），本次不放行", a[0])

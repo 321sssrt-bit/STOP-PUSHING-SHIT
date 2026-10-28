@@ -42,7 +42,7 @@ codex plugin add issue-pr-guard@stop-pushing-shit
 
 创建 GitHub 仓库、Issue、PR，或执行已识别的 `git push` 时，先看完整请求，再另发一条消息：`授权提交`。只授权当前这一笔一次；内容变化、执行失败都要重新授权。
 
-推送用单独一条 `git push <remote> <分支>`，也支持 `-u`、明确的分支 refspec、`--force`、`--force-with-lease`。插件展示目标地址、来源提交、目标分支和改动摘要。批量、标签、删除、动态或组合推送暂不放行；创建操作须使用结构化 GitHub 工具。
+推送用单独一条 `git -C "<绝对仓库路径>" push <remote> <分支>`，也支持 `-u`、明确的分支 refspec、`--force`、`--force-with-lease`。当前 Codex 的 Bash 钩子不提供工具实际工作目录，插件不能靠会话目录推测，因此第一个 `-C` 必须使用绝对路径。插件展示目标地址、来源提交、目标分支和改动摘要。批量、标签、删除、动态或组合推送暂不放行；创建操作须使用结构化 GitHub 工具。
 
 停用：在插件设置中禁用并开启新聊天。卸载：
 
