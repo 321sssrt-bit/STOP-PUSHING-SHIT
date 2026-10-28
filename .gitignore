@@ -32,12 +32,6 @@
 /assets/readme/avatar-seal/*
 !/assets/readme/avatar-seal/zebro-seal.png
 /assets/readme/cc-draft-*/
-!/assets/readme/cc-draft-r03/
-/assets/readme/cc-draft-r03/*
-!/assets/readme/cc-draft-r03/header-light.png
-!/assets/readme/cc-draft-r03/header-dark.png
-!/assets/readme/cc-draft-r03/header-light.svg
-!/assets/readme/cc-draft-r03/header-dark.svg
 
 # Historical reports remain local; active documentation stays visible.
 /docs/acceptance-0.1.0-private-2026-10-27.md

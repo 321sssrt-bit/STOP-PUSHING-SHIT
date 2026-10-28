@@ -200,16 +200,18 @@ func TestCodexHost(t *testing.T) {
 		must(os.MkdirAll(path, 0700))
 	}
 	market := filepath.Join(work, "market")
-	plugin := filepath.Join(market, "plugin 三思")
-	suffix := ""
-	if runtime.GOOS == "windows" {
-		suffix = ".exe"
-	}
+	plugin := filepath.Join(market, "plugins", "codex")
 	for _, file := range []string{".codex-plugin/plugin.json", "hooks/hooks.json", "hooks/run.sh", "hooks/run.ps1"} {
 		write(filepath.Join(plugin, file), read(filepath.Join(root, "plugins", "codex", file)))
 	}
-	write(filepath.Join(plugin, "bin", "issue-pr-guard"+suffix), read(filepath.Join(root, "bin", "issue-pr-guard"+suffix)))
-	write(filepath.Join(market, ".agents/plugins/marketplace.json"), []byte(encode(object{"name": "issue-pr-guard-local", "plugins": []any{object{"name": "issue-pr-guard", "source": object{"source": "local", "path": "./plugin 三思"}, "policy": object{"installation": "AVAILABLE", "authentication": "ON_INSTALL"}}}})))
+	for _, platform := range []string{"darwin-arm64", "darwin-amd64", "linux-arm64", "linux-amd64", "windows-amd64"} {
+		suffix := ""
+		if platform == "windows-amd64" {
+			suffix = ".exe"
+		}
+		write(filepath.Join(plugin, "bin", platform, "issue-pr-guard"+suffix), read(filepath.Join(root, "plugins", "codex", "bin", platform, "issue-pr-guard"+suffix)))
+	}
+	write(filepath.Join(market, ".agents/plugins/marketplace.json"), read(filepath.Join(root, ".agents", "plugins", "marketplace.json")))
 	self, err := os.Executable()
 	must(err)
 	marker := filepath.Join(work, "mcp-called")
@@ -286,7 +288,7 @@ supports_websockets = false
 		return string(data)
 	}
 	run("plugin", "marketplace", "add", market)
-	run("plugin", "add", "issue-pr-guard@issue-pr-guard-local")
+	run("plugin", "add", "issue-pr-guard@stop-pushing-shit")
 	sandbox := "workspace-write"
 	if runtime.GOOS == "windows" {
 		sandbox = "danger-full-access"

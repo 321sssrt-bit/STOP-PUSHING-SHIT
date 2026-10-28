@@ -21,6 +21,39 @@ func TestReleasePackage(t *testing.T) {
 	z, err := zip.OpenReader(archive)
 	must(err)
 	defer z.Close()
+	files := make(map[string]*zip.File, len(z.File))
+	for _, entry := range z.File {
+		files[entry.Name] = entry
+	}
+	var marketplace struct {
+		Plugins []struct {
+			Name   string `json:"name"`
+			Source struct {
+				Path string `json:"path"`
+			} `json:"source"`
+		} `json:"plugins"`
+	}
+	var manifest struct {
+		Name  string `json:"name"`
+		Hooks string `json:"hooks"`
+	}
+	for name, target := range map[string]any{
+		".agents/plugins/marketplace.json": &marketplace,
+		"plugin/.codex-plugin/plugin.json": &manifest,
+		"plugin/hooks/hooks.json":          new(any),
+	} {
+		entry := files[name]
+		if entry == nil {
+			t.Fatal("missing installation manifest", name)
+		}
+		in, err := entry.Open()
+		must(err)
+		must(json.NewDecoder(in).Decode(target))
+		must(in.Close())
+	}
+	if len(marketplace.Plugins) != 1 || marketplace.Plugins[0].Name != "issue-pr-guard" || marketplace.Plugins[0].Source.Path != "./plugin" || manifest.Name != "issue-pr-guard" || manifest.Hooks != "./hooks/hooks.json" {
+		t.Fatal("invalid installation entrypoint", marketplace, manifest)
+	}
 	root := filepath.Join(t.TempDir(), "安装包 中文 空格")
 	for _, entry := range z.File {
 		if !filepath.IsLocal(entry.Name) {

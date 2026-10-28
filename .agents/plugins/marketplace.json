@@ -1,20 +1,10 @@
 {
   "name": "stop-pushing-shit",
-  "interface": {
-    "displayName": "STOP-PUSHING-SHIT"
-  },
-  "plugins": [
-    {
-      "name": "issue-pr-guard",
-      "source": {
-        "source": "local",
-        "path": "./plugins/codex"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Developer Tools"
-    }
-  ]
+  "interface": {"displayName": "STOP-PUSHING-SHIT"},
+  "plugins": [{
+    "name": "issue-pr-guard",
+    "source": {"source": "local", "path": "./plugins/codex"},
+    "policy": {"installation": "AVAILABLE", "authentication": "ON_INSTALL"},
+    "category": "Developer Tools"
+  }]
 }

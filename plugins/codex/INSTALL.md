@@ -9,7 +9,7 @@ codex plugin marketplace add 321sssrt-bit/STOP-PUSHING-SHIT --ref main --sparse 
 codex plugin add issue-pr-guard@stop-pushing-shit
 ```
 
-正式入口固定到 `main` 分支，marketplace 指向 `plugins/codex`。该入口携带五个平台程序，启动时自动选择当前平台；两项 `--sparse` 减少无关源码和图片下载，不代表只下载一个平台。仓库为私有时，安装所用的 GitHub 账户须有访问权限。
+正式入口固定到 `main` 分支，marketplace 指向 `plugins/codex`。该入口携带五个平台程序，启动时自动选择当前平台；两项 `--sparse` 减少无关源码和图片下载，不代表只下载一个平台。
 
 装好后开一个新聊天，在 `/hooks` 中审阅并信任本插件。
 

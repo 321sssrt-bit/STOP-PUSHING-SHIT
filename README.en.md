@@ -1,7 +1,7 @@
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/readme/cc-draft-r03/header-dark.png">
-    <img src="assets/readme/cc-draft-r03/header-light.png" width="760" alt="Official notice from the Office of Stop Pushing Shit, No. 0.1.0 of 2026. Agents must obtain the user's separate authorization for each recognized push, repository, issue, or PR creation. Agents propose. You dispose.">
+    <source media="(prefers-color-scheme: dark)" srcset="assets/readme/header/header-dark.png">
+    <img src="assets/readme/header/header-light.png" width="760" alt="Official notice from the Office of Stop Pushing Shit, No. 0.1.0 of 2026. Agents must obtain the user's separate authorization for each recognized push, repository, issue, or PR creation. Agents propose. You dispose.">
   </picture>
 </p>
 
@@ -60,7 +60,7 @@ codex plugin add issue-pr-guard@stop-pushing-shit
 
 Start a new chat after installation. Open `/hooks` to review and trust the plugin's hooks.
 
-No Python, Go, Node, or separate service is required. While the repository is private, the GitHub account used for installation needs access.
+No Python, Go, Node, or separate service is required.
 
 For disabling or uninstalling the plugin, see the [installation guide (Chinese)](plugins/codex/INSTALL.md). To uninstall directly:
 

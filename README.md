@@ -1,7 +1,7 @@
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/readme/cc-draft-r03/header-dark.png">
-    <img src="assets/readme/cc-draft-r03/header-light.png" width="760" alt="禁止倒屎文件。禁倒发〔2026〕0.1.0 号。关于 Agent 推送代码、新建仓库、开 Issue、提 PR 须经用户本人逐笔授权的通知。STOP-PUSHING-SHIT：Agents propose. You dispose. 各 Agent：写代码、改文件、打草稿，一律照常。唯推送代码、新建 GitHub 仓库、开 Issue、提 PR（以本插件识别者为准），须先呈用户过目；经用户另发整条“授权提交”，方可原样执行一次。特此通知。">
+    <source media="(prefers-color-scheme: dark)" srcset="assets/readme/header/header-dark.png">
+    <img src="assets/readme/header/header-light.png" width="760" alt="禁止倒屎文件。禁倒发〔2026〕0.1.0 号。关于 Agent 推送代码、新建仓库、开 Issue、提 PR 须经用户本人逐笔授权的通知。STOP-PUSHING-SHIT：Agents propose. You dispose. 各 Agent：写代码、改文件、打草稿，一律照常。唯推送代码、新建 GitHub 仓库、开 Issue、提 PR（以本插件识别者为准），须先呈用户过目；经用户另发整条“授权提交”，方可原样执行一次。特此通知。">
   </picture>
 </p>
 
@@ -54,7 +54,7 @@ codex plugin add issue-pr-guard@stop-pushing-shit
 
 装好后开一个新聊天，在 `/hooks` 里审阅并信任本插件的 Hook。
 
-无需另装 Python、Go、Node，也不用单独启动服务。仓库为私有时，安装账号须有访问权限。
+无需另装 Python、Go、Node，也不用单独启动服务。
 
 要停用或卸载，见[卸载说明](plugins/codex/INSTALL.md)。
 

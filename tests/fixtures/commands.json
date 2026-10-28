@@ -1,0 +1,257 @@
+[
+  {
+    "name": "test_known_shell_creation_routes_are_denied/0",
+    "command": "gh issue create --title Example --body Body -R example/project",
+    "deny": true
+  },
+  {
+    "name": "test_known_shell_creation_routes_are_denied/1",
+    "command": "/opt/bin/gh pr create --draft --title PR",
+    "deny": true
+  },
+  {
+    "name": "test_known_shell_creation_routes_are_denied/2",
+    "command": "gh --repo example/project issue create --title X",
+    "deny": true
+  },
+  {
+    "name": "test_known_shell_creation_routes_are_denied/3",
+    "command": "gh 'pr' 'create' --title X",
+    "deny": true
+  },
+  {
+    "name": "test_known_shell_creation_routes_are_denied/4",
+    "command": "sh -c 'gh pr create --title X'",
+    "deny": true
+  },
+  {
+    "name": "test_known_shell_creation_routes_are_denied/5",
+    "command": "gh pr \\\ncreate --title X",
+    "deny": true
+  },
+  {
+    "name": "test_known_shell_creation_routes_are_denied/6",
+    "command": "gh api repos/example/project/issues -f title=X",
+    "deny": true
+  },
+  {
+    "name": "test_known_shell_creation_routes_are_denied/7",
+    "command": "gh api -XPOST repos/example/project/pulls --input payload.json",
+    "deny": true
+  },
+  {
+    "name": "test_known_shell_creation_routes_are_denied/8",
+    "command": "curl --data @payload.json https://api.github.com/repos/example/project/issues",
+    "deny": true
+  },
+  {
+    "name": "test_known_shell_creation_routes_are_denied/9",
+    "command": "curl -X POST https://github.example/api/v3/repos/example/project/pulls",
+    "deny": true
+  },
+  {
+    "name": "test_known_shell_creation_routes_are_denied/10",
+    "command": "curl --request POST https://api.github.com/repos/example/project/issues",
+    "deny": true
+  },
+  {
+    "name": "test_known_shell_creation_routes_are_denied/11",
+    "command": "curl --json '{\"title\":\"X\"}' https://api.github.com/repos/example/project/issues",
+    "deny": true
+  },
+  {
+    "name": "test_known_shell_creation_routes_are_denied/12",
+    "command": "curl -f https://api.github.com/repos/example/project/pulls -d @payload.json",
+    "deny": true
+  },
+  {
+    "name": "test_known_shell_creation_routes_are_denied/13",
+    "command": "curl --url=https://api.github.com/repos/example/project/issues -XPOST",
+    "deny": true
+  },
+  {
+    "name": "test_known_shell_creation_routes_are_denied/14",
+    "command": "curl -XPOST https://example.invalid/health https://api.github.com/repos/example/project/pulls",
+    "deny": true
+  },
+  {
+    "name": "test_known_shell_creation_routes_are_denied/15",
+    "command": "gh api graphql -f query='mutation { createIssue(input: {}) { issue { id } } }'",
+    "deny": true
+  },
+  {
+    "name": "test_known_shell_creation_routes_are_denied/16",
+    "command": "python3 -c 'client.graphql(\"mutation { createPullRequest(input: {}) { id } }\")'",
+    "deny": true
+  },
+  {
+    "name": "test_python_argument_arrays_and_split_endpoints_are_denied/0",
+    "command": "python3 -c \"import subprocess; repo='example/project'; subprocess.run(['gh','api','--method','POST','repos/'+repo+'/pulls','--input','body.json'])\"",
+    "deny": true
+  },
+  {
+    "name": "test_python_argument_arrays_and_split_endpoints_are_denied/1",
+    "command": "python3 -c \"import subprocess as sp; sp.run(['gh','issue','create','--title','X'])\"",
+    "deny": true
+  },
+  {
+    "name": "test_python_argument_arrays_and_split_endpoints_are_denied/2",
+    "command": "python3 -c \"from subprocess import run; run(['gh','pr','create','--draft'])\"",
+    "deny": true
+  },
+  {
+    "name": "test_python_argument_arrays_and_split_endpoints_are_denied/3",
+    "command": "python3 -c \"import requests; repo='example/project'; requests.post('https://api.github.com/repos/'+repo+'/issues',json={'title':'X'})\"",
+    "deny": true
+  },
+  {
+    "name": "test_python_argument_arrays_and_split_endpoints_are_denied/4",
+    "command": "python3 -c \"import requests; requests.post(url='https://api.github.com/repos/example/project/issues',json={'title':'X'})\"",
+    "deny": true
+  },
+  {
+    "name": "test_python_argument_arrays_and_split_endpoints_are_denied/5",
+    "command": "ssh fixture-host \"gh api repos/example/project/pulls -f title=X\"",
+    "deny": true
+  },
+  {
+    "name": "test_python_argument_arrays_and_split_endpoints_are_denied/6",
+    "command": "gh api --method GET repos/example/project/issues; gh api repos/example/project/pulls -f title=X",
+    "deny": true
+  },
+  {
+    "name": "test_python_argument_arrays_and_split_endpoints_are_denied/7",
+    "command": "python3 -c \"import subprocess; subprocess.run(['gh','api',get_endpoint(),'--method',get_method(),'--input','body.json'])\"",
+    "deny": true
+  },
+  {
+    "name": "test_wrapped_reads_and_text_preparation_are_not_publication/0",
+    "command": "python3 -c \"import subprocess; repo='example/project'; subprocess.run(['gh','api','--method','GET','repos/'+repo+'/pulls','-f','state=all'])\"",
+    "deny": false
+  },
+  {
+    "name": "test_wrapped_reads_and_text_preparation_are_not_publication/1",
+    "command": "ssh fixture-host \"gh issue list -R example/project\"",
+    "deny": false
+  },
+  {
+    "name": "test_wrapped_reads_and_text_preparation_are_not_publication/2",
+    "command": "echo 'gh pr create'",
+    "deny": false
+  },
+  {
+    "name": "test_wrapped_reads_and_text_preparation_are_not_publication/3",
+    "command": "python3 -c \"print('createPullRequest')\"",
+    "deny": false
+  },
+  {
+    "name": "test_wrapped_reads_and_text_preparation_are_not_publication/4",
+    "command": "cat <<'PY'\nimport subprocess\nsubprocess.run(['gh','pr','create'])\nPY",
+    "deny": false
+  },
+  {
+    "name": "test_wrapped_reads_and_text_preparation_are_not_publication/5",
+    "command": "gh api graphql -f 'query=query { viewer { login } }'",
+    "deny": false
+  },
+  {
+    "name": "test_wrapped_reads_and_text_preparation_are_not_publication/6",
+    "command": "curl -f --url https://api.github.com/repos/example/project/pulls",
+    "deny": false
+  },
+  {
+    "name": "test_wrapped_reads_and_text_preparation_are_not_publication/7",
+    "command": "git diff && python3 -m unittest discover -s tests",
+    "deny": false
+  },
+  {
+    "name": "test_windows_creation_commands_are_denied/0",
+    "command": "& \"C:\\Program Files\\GitHub CLI\\gh.exe\" pr create --draft",
+    "deny": true
+  },
+  {
+    "name": "test_windows_creation_commands_are_denied/1",
+    "command": "C:\\Tools\\gh.exe issue create --title X",
+    "deny": true
+  },
+  {
+    "name": "test_windows_creation_commands_are_denied/2",
+    "command": "powershell.exe -NoProfile -Command \"gh pr create --title X\"",
+    "deny": true
+  },
+  {
+    "name": "test_windows_creation_commands_are_denied/3",
+    "command": "cmd.exe /d /c gh.exe issue create --title X",
+    "deny": true
+  },
+  {
+    "name": "test_windows_creation_commands_are_denied/4",
+    "command": "& { gh pr create --title X }",
+    "deny": true
+  },
+  {
+    "name": "test_windows_creation_commands_are_denied/5",
+    "command": "gh pr `\ncreate --title X",
+    "deny": true
+  },
+  {
+    "name": "test_windows_creation_commands_are_denied/6",
+    "command": "Invoke-RestMethod -Method Post -Uri https://api.github.com/repos/example/project/issues -Body $payload",
+    "deny": true
+  },
+  {
+    "name": "test_windows_creation_commands_are_denied/7",
+    "command": "iwr https://api.github.com/repos/example/project/pulls -Method:Post -Body $payload",
+    "deny": true
+  },
+  {
+    "name": "test_windows_creation_commands_are_denied/8",
+    "command": "curl -Method POST -Uri https://api.github.com/repos/example/project/issues -Body $payload",
+    "deny": true
+  },
+  {
+    "name": "test_windows_creation_commands_are_denied/9",
+    "command": "Invoke-RestMethod @request",
+    "deny": true
+  },
+  {
+    "name": "test_windows_creation_commands_are_denied/10",
+    "command": "py.exe -3 -c \"import subprocess; subprocess.run(['gh.exe','pr','create'])\"",
+    "deny": true
+  },
+  {
+    "name": "test_windows_reads_and_drafts_are_allowed/0",
+    "command": "& \"C:\\Program Files\\GitHub CLI\\gh.exe\" issue list",
+    "deny": false
+  },
+  {
+    "name": "test_windows_reads_and_drafts_are_allowed/1",
+    "command": "powershell.exe -NoProfile -Command \"gh issue list\"",
+    "deny": false
+  },
+  {
+    "name": "test_windows_reads_and_drafts_are_allowed/2",
+    "command": "Invoke-RestMethod -Method Get -Uri https://api.github.com/repos/example/project/issues",
+    "deny": false
+  },
+  {
+    "name": "test_windows_reads_and_drafts_are_allowed/3",
+    "command": "iwr https://api.github.com/repos/example/project/pulls",
+    "deny": false
+  },
+  {
+    "name": "test_windows_reads_and_drafts_are_allowed/4",
+    "command": "Invoke-RestMethod -Method Get -Uri https://api.github.com/repos/example/project/issues -Headers @{Accept=\"application/json\"}",
+    "deny": false
+  },
+  {
+    "name": "test_windows_reads_and_drafts_are_allowed/5",
+    "command": "Write-Output \"gh pr create\"",
+    "deny": false
+  },
+  {
+    "name": "historical_python_ssh",
+    "deny": true,
+    "file": "python-ssh-gh-api.sh"
+  }
+]

@@ -1,4 +1,4 @@
-Third-party notices for STOP-PUSHING-SHIT 0.4.0
+Third-party notices for STOP-PUSHING-SHIT
 
 mvdan.cc/sh/v3@v3.14.1
 Copyright (c) 2016, Daniel Martí. All rights reserved.

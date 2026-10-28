@@ -46,7 +46,7 @@ go run ./tools/package /tmp/guard-release
 
 构建脚本不下载或安装工具。Linux 使用 musl 静态链接；Windows 使用 mingw 目标静态链接非系统运行库；macOS 使用系统库。`-trimpath` 去除本机构建路径，发布包不含源码、测试、旧报告或个人配置。项目的 MIT 许可证 `LICENSE` 和依赖许可 `THIRD_PARTY_NOTICES.txt` 随包保留。
 
-打包器重新打开每个 ZIP，断言入口、可执行权限、程序字节和文件白名单；它不是安装系统。更新依赖时需同步 `THIRD_PARTY_NOTICES.txt`。
+打包器核对 GitHub marketplace 入口与 `plugins/codex/bin/` 中的五平台程序，重新打开每个 ZIP，断言入口、可执行权限、程序字节和文件白名单；它不是安装系统。更新依赖时需同步 `THIRD_PARTY_NOTICES.txt`。
 
 目录或打包路径变更可先运行 `go test . -run 'TestLauncher|TestHookConfiguration'`，再用 `SPS_RELEASE_PACKAGE` 指向 `dist/codex/` 中当前平台的 ZIP 运行 `go test ./tests -run TestReleasePackage`。真实宿主测试从 `plugins/codex/` 读取接入文件，从 `bin/` 读取本机程序。
 

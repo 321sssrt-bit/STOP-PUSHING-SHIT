@@ -28,6 +28,18 @@ func main() {
 	manifest := read(filepath.Join(pluginRoot, ".codex-plugin/plugin.json"))
 	var plugin struct{ Version string }
 	check(json.Unmarshal(manifest, &plugin))
+	var repositoryMarketplace struct {
+		Plugins []struct {
+			Name   string `json:"name"`
+			Source struct {
+				Path string `json:"path"`
+			} `json:"source"`
+		} `json:"plugins"`
+	}
+	check(json.Unmarshal(read(".agents/plugins/marketplace.json"), &repositoryMarketplace))
+	if len(repositoryMarketplace.Plugins) != 1 || repositoryMarketplace.Plugins[0].Name != "issue-pr-guard" || repositoryMarketplace.Plugins[0].Source.Path != "./plugins/codex" {
+		panic("repository marketplace does not point to plugins/codex")
+	}
 	check(os.MkdirAll(outputRoot, 0755))
 	var results []map[string]any
 	platforms := []string{"darwin-arm64", "darwin-amd64", "linux-arm64", "linux-amd64", "windows-amd64"}
@@ -39,6 +51,10 @@ func main() {
 		var binary []byte
 		if target != "universal" {
 			binary = read(filepath.Join(os.Args[1], "guard-"+target+suffix))
+			distributed := filepath.Join(pluginRoot, "bin", target, "issue-pr-guard"+suffix)
+			if !bytes.Equal(binary, read(distributed)) {
+				panic("GitHub distribution binary differs from release input: " + distributed)
+			}
 		}
 		name := "plugin/bin/issue-pr-guard" + suffix
 		contents := map[string][]byte{
