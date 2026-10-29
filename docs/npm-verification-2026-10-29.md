@@ -26,3 +26,13 @@ npm 安装器不自动删除用户已有来源。
 
 npm 包不含安装时下载脚本、依赖或凭据。GitHub Release 同时保留 npm 原包和原有离线格式；
 发布与回读顺序见 [npm 与 GitHub Release](npm-release.md)。
+
+## 公开 npm 包回读
+
+- 从未登录 npm 的 macOS 环境下载 `codex-stop-pushing-shit@0.1.1` 与
+  `dsh-stop-pushing-shit@0.1.2`，分别为 9,591,190 和 5,684,953 字节；与本地原包、
+  GitHub Release 附件逐字节一致。11 个 Release 附件全部回读通过。
+- 使用全新 npm 缓存，从公共注册表执行 Codex npm 安装命令，隔离安装成功。
+- 使用全新 DSH profile，从公共注册表按 `dsh-stop-pushing-shit@0.1.2` 包名安装成功。
+- npm `latest` 已分别回读为 `0.1.1` 和 `0.1.2`。发布初期的临时占位版本已消失，
+  未通过重复上传或改版本号规避传播等待。
