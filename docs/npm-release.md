@@ -1,7 +1,7 @@
 # npm 与 GitHub Release
 
 Codex 使用 `codex-stop-pushing-shit`，DSH 使用 `dsh-stop-pushing-shit`，保持独立版本号。
-当前版本分别是 0.1.1 和 0.1.2。npm 负责分发包内全部程序，不使用安装时下载脚本。
+当前版本分别是 0.1.2 和 0.1.3。npm 负责分发包内全部程序，不使用安装时下载脚本。
 
 ## 打包
 

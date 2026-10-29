@@ -5,7 +5,7 @@
 需要已有 Codex、Node.js 22+ 和 npm，在终端运行：
 
 ```sh
-npx --yes codex-stop-pushing-shit@0.1.1
+npx --yes codex-stop-pushing-shit@0.1.2
 ```
 
 包内包含五个平台的程序，安装时不从 GitHub 或开发者服务器下载额外文件。
@@ -42,7 +42,7 @@ codex plugin add issue-pr-guard@stop-pushing-shit
 
 ## 从 GitHub Release 安装（离线备用）
 
-从 [Codex 0.1.1 Release](https://github.com/321sssrt-bit/STOP-PUSHING-SHIT/releases/tag/codex-v0.1.1) 下载对应平台的 `STOP-PUSHING-SHIT-0.1.1-<平台>.zip`：
+从 [Codex 0.1.2 Release](https://github.com/321sssrt-bit/STOP-PUSHING-SHIT/releases/tag/codex-v0.1.2) 下载对应平台的 `STOP-PUSHING-SHIT-0.1.2-<平台>.zip`：
 
 | 设备 | 平台 |
 |---|---|
@@ -61,7 +61,7 @@ codex plugin add issue-pr-guard@stop-pushing-shit
 
 安装后同样需要开启新聊天，在 `/hooks` 中审阅并信任插件。单平台 ZIP 只携带对应设备的程序；`universal` 包包含五个平台程序，保留作可选离线合集。
 
-Release 另附 `codex-stop-pushing-shit-0.1.1.tgz`，与 npm 发布使用同一个文件。
+Release 另附 `codex-stop-pushing-shit-0.1.2.tgz`，与 npm 发布使用同一个文件。
 ZIP 安装不依赖 npm 或 Node.js；npm 包和 ZIP 使用相同版本的 Hook 与程序。
 
 ## 授权与卸载

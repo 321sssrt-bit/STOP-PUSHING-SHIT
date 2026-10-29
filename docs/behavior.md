@@ -26,6 +26,7 @@
 | `issue_write` / `pull_request_write` 的 `method: create` 或 `action: create` | 同上 |
 | 可识别的 gh、REST、GraphQL 创建 | 拒绝，要求改走结构化工具；不按命令文本授权 |
 | Python subprocess、os.spawn* / exec* / posix_spawn*，导入别名、常量拼接、f-string、Python → SSH → gh | 按实际可执行文件和参数位置识别；subprocess 包含 executable / shell 选项 |
+| Node / nodejs（含 `.exe`） | 普通脚本、查询、测试和模块使用不受限制；检查可识别源码中的 `child_process` 调用，按实际命令处理。动态导入、fork、未知源码和继承预加载可能保守拒绝，不能凭“授权提交”放行 |
 | Windows gh.exe、常见 PowerShell / CMD 包装与 REST 别名 | 有限识别；已验证的 GET 查询放行 |
 | 查询、本地编辑、打印或准备草稿 | 不追加创建授权 |
 
@@ -45,9 +46,16 @@ Shell 语法树处理注释、heredoc 及命令替换；quoted heredoc 的文本
 
 隐含目标、批量、删除、标签、多推送地址、组合命令、动态参数，以及会扩展范围的 mirror / followTags / recurseSubmodules 配置，均不进入授权流程。简写目标受 remote.push 重映射时要求写出完整 refspec。Git 配置别名、未知执行入口和同身份篡改仍属于识别边界，不保证拦截。
 
+## Node 执行
+
+Node 入口不再默认拒绝。`-e` / `--eval`、`-p` / `--print` 和已知 heredoc 的源码由 JavaScript 语法树检查；识别 `child_process` 的直接调用、变量／解构导入和动态导入，并将命令交给现有 Shell / GitHub / push 检查。普通计算、模块读取和文件操作不因使用 Node 而被拒绝。
+
+动态导入 `child_process`、`fork`、不能静态确定的子进程参数、交互式或未知 stdin、以及影响内联代码检查的 `NODE_OPTIONS` 预加载保守拒绝。脚本文件、普通 CommonJS / ESM 加载和 Shell / Python / PowerShell 包装不单独构成拒绝理由；脚本文件内部及动态／编码程序仍是未检查边界。Node 包装不能生成可授权请求，也不能消耗其他操作的授权来执行。
+
+这是 Node 入口限制，不是整个 JavaScript 生态的执行隔离：未知工具、npm 等其他程序内部启动 Node，仍属于下述边界。本次源码修复没有更新已发布或已安装的程序，也没有新增直接 `git commit` 的授权支持。
+
 ## 识别与运行边界
 
-- **Node 启动 gh 仍不受识别**，已有明确边界测试。
 - 浏览器、磁盘脚本内部、运行时动态/编码程序、已启动终端的后续输入、未知工具及宿主跳过 hook 的路径不保证受约束。
 - 无法解析的命令、过深嵌套、已识别执行入口中的未知命令名和未知写请求保守拒绝，可能误拦动态只读操作。
 - 管道及无法静态确定的 stdin 不计算实际文本；已识别的 stdin 解释器会拒绝未知输入。Python 多次赋值、增量赋值和不支持的命名 Unicode 转义在执行路径中保守拒绝。

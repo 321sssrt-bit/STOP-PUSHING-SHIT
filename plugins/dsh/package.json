@@ -1,6 +1,6 @@
 {
   "name": "dsh-stop-pushing-shit",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Require one explicit human authorization for each GitHub creation or git push.",
   "type": "module",
   "main": "index.js",

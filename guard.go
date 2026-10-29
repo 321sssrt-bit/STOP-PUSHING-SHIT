@@ -203,7 +203,7 @@ func handle(e Event) (map[string]any, error) {
 				if push != nil {
 					return authorizeTarget(e, &Target{Tool: e.Tool, Input: args, Cwd: e.Cwd, Push: push}, "git push")
 				}
-				return rejectUnbound(e, "已阻止通过命令行/API 创建仓库（含 fork、模板建仓）、issue、PR 或未经核实的 git push。创建操作请改用结构化 GitHub 工具；推送请单独执行 git push <remote> <分支>，展示完整参数后取得单次授权。组合命令、动态参数和脚本内的 push 不能按命令文本放行。")
+				return rejectUnbound(e, "已阻止通过命令行/API 创建仓库（含 fork、模板建仓）、issue、PR、未经核实的 git push 或无法核实的 Node 子进程。普通 Node 脚本、查询和测试不受此限制；已识别的子进程按实际命令检查。创建操作请改用结构化 GitHub 工具；推送请单独执行 git push <remote> <分支>，展示完整参数后取得单次授权。组合命令、动态参数和脚本内的 push 不能按命令文本放行。")
 			}
 		}
 		return empty, nil

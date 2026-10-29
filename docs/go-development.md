@@ -8,10 +8,11 @@
 | --- | --- | --- | --- |
 | mvdan.cc/sh/v3 | v3.14.1 | `syntax` 解析语句、注释、重定向、heredoc、命令替换；`expand.Fields` 解码静态参数 | 使用默认 Bash 语法；本版本库另支持 POSIX、mksh、Zsh、Bats，但本项目不声称全方言验收。动态展开不求值，不读目录做 glob |
 | tree-sitter/go-tree-sitter | v0.25.0 | Go 调用成熟 C 语法解析器 | CGo 构建成本；运行时静态编入，用户无须 C 工具链 |
+| tree-sitter/tree-sitter-javascript | v0.23.1 | 检查 Node 内联源码和已知 stdin 中可识别的 `child_process` 调用 | 不执行 JavaScript，不依赖 Node 运行时 |
 | tree-sitter/tree-sitter-python | v0.25.0 | 解析 Python，包括历史脚本的 f-string、别名及内嵌字符串 | 只有 Python grammar 进入程序；不执行代码，不提供 Python VM |
 | gofrs/flock | v0.13.1 | 跨平台 `TryLock` | 争用立即拒绝，不等待宿主超时；底层平台细节由库维护 |
 
-运行路径还使用两个传递依赖：`github.com/mattn/go-pointer v0.0.1`、`golang.org/x/sys v0.47.0`；后者也由 Windows 测试的 Job Object 清理直接引用。Go 模块图可能为上游测试下载其他 grammar / 测试库，`go list -deps` 确认它们没有进入本程序。没有 go-gh、Node、数据库或服务。
+运行路径还使用两个传递依赖：`github.com/mattn/go-pointer v0.0.1`、`golang.org/x/sys v0.47.0`；后者也由 Windows 测试的 Job Object 清理直接引用。Go 模块图可能为上游测试下载其他 grammar / 测试库，程序仅引入 Python 和 JavaScript grammar。没有 go-gh、Node、数据库或服务。
 
 PowerShell grammar 的候选 Go 子模块声明与导入路径不一致，最小依赖探测失败；没有修补上游或把它放进最终依赖。最终继续维护既有范围的有限 PowerShell / CMD 识别，并以原有读写样本校验。没有把 Shell 库冒充成多语言解释器。
 
@@ -50,11 +51,12 @@ go run ./tools/package /tmp/guard-release
 
 目录或打包路径变更可先运行 `go test . -run 'TestLauncher|TestHookConfiguration'`，再用 `SPS_RELEASE_PACKAGE` 指向 `dist/codex/` 中当前平台的 ZIP 运行 `go test ./tests -run TestReleasePackage`。真实宿主测试从 `plugins/codex/` 读取接入文件，从 `bin/` 读取本机程序。
 
-运行保护限制：单个 hook JSON / 状态最多 16 MiB，待分析命令最多 256 KiB，跨语言嵌套最多 8 层，内部总时限 2.5 秒；超限拒绝。Python grammar 单次解析也有时限。完整参数比较在这些输入限制内进行。
+运行保护限制：单个 hook JSON / 状态最多 16 MiB，待分析命令最多 256 KiB，跨语言嵌套最多 8 层，内部总时限 2.5 秒；超限拒绝。Python / JavaScript grammar 单次解析也有时限。完整参数比较在这些输入限制内进行。
 
 ## 一手依据
 
 - [mvdan syntax API](https://pkg.go.dev/mvdan.cc/sh/v3/syntax)、[expand API](https://pkg.go.dev/mvdan.cc/sh/v3/expand)：语法树和静态参数解码，参数使用 Fields，不能拿 Literal 代替 Shell 参数的转义处理。
+- [Tree-sitter 官方 Go binding](https://github.com/tree-sitter/go-tree-sitter)、[JavaScript grammar](https://github.com/tree-sitter/tree-sitter-javascript)：使用后关闭 parser / tree；解析树含错误时拒绝。
 - [Tree-sitter 官方 Go binding](https://github.com/tree-sitter/go-tree-sitter)、[Python grammar](https://github.com/tree-sitter/tree-sitter-python)：使用后关闭 parser / tree；解析树含错误时拒绝。
 - [gofrs/flock](https://pkg.go.dev/github.com/gofrs/flock)：复用跨平台非阻塞锁。
 - [OpenAI Hooks](https://learn.chatgpt.com/docs/hooks)：同步 PreToolUse、退出码 2、deny、独立宿主权限检查、Windows 入口。真实接线结果另见验证记录。

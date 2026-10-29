@@ -277,6 +277,8 @@ func argvCreation(argv []any, stdin any, depth int) bool {
 		return ghCreation(args)
 	case "git":
 		return gitPushCommand(args)
+	case "node", "nodejs":
+		return nodeCommand(args, stdin, depth)
 	case "eval":
 		var source []string
 		for _, arg := range args {
@@ -389,10 +391,10 @@ func shellCreation(source string, depth int, stdin any) bool {
 		}
 		return true
 	}
-	return shellNodeCreation(file, depth, stdin)
+	return shellNodeCreation(file, depth, stdin, false)
 }
 
-func shellNodeCreation(node syntax.Node, depth int, stdin any) bool {
+func shellNodeCreation(node syntax.Node, depth int, stdin any, nodeOptions bool) bool {
 	if depth > 8 {
 		return true
 	}
@@ -401,8 +403,15 @@ func shellNodeCreation(node syntax.Node, depth int, stdin any) bool {
 		if blocked {
 			return false
 		}
+		if function, ok := n.(*syntax.FuncDecl); ok {
+			blocked = shellNodeCreation(function.Body, depth, stdin, false)
+			return false
+		}
+		if assignment, ok := n.(*syntax.Assign); ok && assignment.Name != nil && assignment.Name.Value == "NODE_OPTIONS" && literal(assignment.Value, true) != "" {
+			nodeOptions = true
+		}
 		if pipe, ok := n.(*syntax.BinaryCmd); ok && (pipe.Op == syntax.Pipe || pipe.Op == syntax.PipeAll) {
-			blocked = shellNodeCreation(pipe.X, depth+1, stdin) || shellNodeCreation(pipe.Y, depth+1, nil)
+			blocked = shellNodeCreation(pipe.X, depth+1, stdin, nodeOptions) || shellNodeCreation(pipe.Y, depth+1, nil, nodeOptions)
 			return false
 		}
 		stmt, ok := n.(*syntax.Stmt)
@@ -427,9 +436,9 @@ func shellNodeCreation(node syntax.Node, depth int, stdin any) bool {
 		call, ok := stmt.Cmd.(*syntax.CallExpr)
 		if !ok {
 			if stmt.Cmd != nil && len(stmt.Redirs) > 0 {
-				blocked = shellNodeCreation(stmt.Cmd, depth+1, input)
+				blocked = shellNodeCreation(stmt.Cmd, depth+1, input, nodeOptions)
 				for _, r := range stmt.Redirs {
-					blocked = blocked || shellNodeCreation(r, depth+1, stdin)
+					blocked = blocked || shellNodeCreation(r, depth+1, stdin, nodeOptions)
 				}
 				return false
 			}
@@ -438,6 +447,10 @@ func shellNodeCreation(node syntax.Node, depth int, stdin any) bool {
 		args := make([]any, len(call.Args))
 		for i, w := range call.Args {
 			args[i] = literal(w, true)
+		}
+		if nodeOptions && len(args) > 0 && (text(args[0]) == "node" || text(args[0]) == "nodejs") {
+			blocked = true
+			return false
 		}
 		blocked = argvCreation(args, input, depth)
 		return !blocked

@@ -5,7 +5,7 @@
 | 目录 | 当前状态 | 内容 |
 |---|---|---|
 | [codex](codex/README.md) | 已实现，0.1.1 | npm 安装器、四项同步 hooks、marketplace 与 ZIP 备用包 |
-| [dsh](dsh/README.md) | 已实现，0.1.2 | 原生执行 guard、npm 通用包与独立平台备用包 |
+| [dsh](dsh/README.md) | 已实现，0.1.3 | 原生执行 guard、npm 通用包与独立平台备用包 |
 
 Go 运行源码保留在仓库根目录；其中仍包含当前 Codex 事件协议。DSH 原生接入层将真实事件和完整工具参数转换给同一个 Go 程序，不复制授权规则和命令识别。
 
