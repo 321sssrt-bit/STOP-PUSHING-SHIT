@@ -1,34 +1,46 @@
 # STOP-PUSHING-SHIT for DSH
 
-DSH 原生插件，版本 0.1.1。创建 GitHub 仓库（含 fork、模板）、Issue、PR 和
+DSH 原生插件，版本 0.1.2。创建 GitHub 仓库（含 fork、模板）、Issue、PR 和
 `git push` 前，先返回完整请求供审阅；用户单独发送 `授权提交` 后，只执行该请求一次。
 参数、工作目录或推送提交改变，执行失败、取消或本轮结束后，都不能复用旧授权。
 
 ## 安装
 
 需要 Node.js 24.9+、DSH、其插件管理命令使用的 pnpm，以及用于核对推送内容的 Git。
-从 [DSH 0.1.1 Release](https://github.com/321sssrt-bit/STOP-PUSHING-SHIT/releases/tag/dsh-v0.1.1) 下载，按宿主平台选择：
+推荐从 npm 安装，包内已包含三个支持平台的程序，不需要手动选择平台：
 
-- macOS Apple Silicon：`dsh-stop-pushing-shit-0.1.1-darwin-arm64.tgz`
-- Linux ARM64：`dsh-stop-pushing-shit-0.1.1-linux-arm64.tgz`
-- Windows x64：`dsh-stop-pushing-shit-0.1.1-windows-amd64.tgz`
+```sh
+dsh plugin --profile web add dsh-stop-pushing-shit@0.1.2
+```
+
+Windows PowerShell 将 `dsh` 换成 `dsh.cmd`。升级时使用目标版本运行同一条命令。
+安装时不会从 GitHub 或开发者服务器额外下载程序。
+
+### GitHub Release 备用安装
+
+从 [DSH 0.1.2 Release](https://github.com/321sssrt-bit/STOP-PUSHING-SHIT/releases/tag/dsh-v0.1.2)
+下载 `dsh-stop-pushing-shit-0.1.2.tgz`，它与 npm 发布使用同一个文件；也可按平台下载更小的包：
+
+- macOS Apple Silicon：`dsh-stop-pushing-shit-0.1.2-darwin-arm64.tgz`
+- Linux ARM64：`dsh-stop-pushing-shit-0.1.2-linux-arm64.tgz`
+- Windows x64：`dsh-stop-pushing-shit-0.1.2-windows-amd64.tgz`
 
 在终端运行，路径替换为下载或本地构建的包：
 
 ```sh
-dsh plugin --profile web add /absolute/path/dsh-stop-pushing-shit-0.1.1-darwin-arm64.tgz
+dsh plugin --profile web add /absolute/path/dsh-stop-pushing-shit-0.1.2.tgz
 ```
 
 Windows PowerShell 使用：
 
 ```powershell
-dsh.cmd plugin --profile web add C:\path\to\dsh-stop-pushing-shit-0.1.1-windows-amd64.tgz
+dsh.cmd plugin --profile web add C:\path\to\dsh-stop-pushing-shit-0.1.2.tgz
 ```
 
 若没有全局 pnpm，也可以临时提供，不必修改全局安装：
 
 ```sh
-npm exec --yes --package=pnpm -- dsh plugin --profile web add /absolute/path/dsh-stop-pushing-shit-0.1.1-darwin-arm64.tgz
+npm exec --yes --package=pnpm -- dsh plugin --profile web add dsh-stop-pushing-shit@0.1.2
 ```
 
 安装到实际使用的 profile；使用 `headless` 时把 `web` 改为 `headless`。安装后重新启动

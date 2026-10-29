@@ -1,6 +1,6 @@
 {
   "name": "issue-pr-guard",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "推送代码、创建 GitHub 仓库、Issue 或 PR 前，要求用户对具体请求单独授权一次。",
   "hooks": "./hooks/hooks.json",
   "interface": {

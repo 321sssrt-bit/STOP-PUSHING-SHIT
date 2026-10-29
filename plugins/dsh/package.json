@@ -1,6 +1,6 @@
 {
   "name": "dsh-stop-pushing-shit",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Require one explicit human authorization for each GitHub creation or git push.",
   "type": "module",
   "main": "index.js",
@@ -12,5 +12,11 @@
   "files": ["index.js", "cordis.patch.yml", "bin", "README.md", "LICENSE", "THIRD_PARTY_NOTICES.txt"],
   "engines": { "node": ">=24.9" },
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/321sssrt-bit/STOP-PUSHING-SHIT.git",
+    "directory": "plugins/dsh"
+  },
+  "publishConfig": { "access": "public", "registry": "https://registry.npmjs.org/" },
   "dsh": { "bundle": { "patch": "./cordis.patch.yml" } }
 }

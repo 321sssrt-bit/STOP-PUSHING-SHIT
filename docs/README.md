@@ -10,7 +10,9 @@
 - [识别范围与授权规则](behavior.md)。
 - [验证说明](verification.md)：已验证的平台、结果与边界。
 - [Go 开发与打包](go-development.md)。
+- [npm 与 Release 发布](npm-release.md)：同版本、同程序、同一份 npm 安装包。
+- [npm 分发验证](npm-verification-2026-10-29.md)：包一致性、实际安装和本轮边界。
 
-当前 Codex 版本为 0.1.0，DSH 版本为 0.1.1，采用 [MIT 许可证](../LICENSE)。正式 GitHub marketplace 安装命令见[安装说明](../plugins/codex/INSTALL.md)；独立 ZIP 以 [GitHub Releases](https://github.com/321sssrt-bit/STOP-PUSHING-SHIT/releases) 中列出的附件为准。
+当前 Codex 版本为 0.1.1，DSH 版本为 0.1.2，采用 [MIT 许可证](../LICENSE)。推荐 npm 安装；GitHub marketplace 与 [GitHub Releases](https://github.com/321sssrt-bit/STOP-PUSHING-SHIT/releases) 中的离线包继续保留，见[安装说明](../INSTALL.md)。
 
 正式首页提供[简体中文](../README.md)与 [English](../README.en.md)。本地制作资料、历史源码、验收报告和原始证据不随安装包分发。

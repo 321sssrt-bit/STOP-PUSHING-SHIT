@@ -1,6 +1,29 @@
 # 安装 STOP-PUSHING-SHIT · Codex
 
-## 从 GitHub 安装
+## 从 npm 安装（推荐）
+
+需要已有 Codex、Node.js 22+ 和 npm，在终端运行：
+
+```sh
+npx --yes codex-stop-pushing-shit@0.1.1
+```
+
+包内包含五个平台的程序，安装时不从 GitHub 或开发者服务器下载额外文件。
+安装器把插件源保存到 `$CODEX_HOME/npm/codex-stop-pushing-shit/`（默认
+`~/.codex/npm/codex-stop-pushing-shit/`），清理 npm 缓存不会删除已安装插件。
+不需要全局安装 npm 包，也不会自动信任 Hook。装好后开一个新聊天，在 `/hooks`
+中审阅并信任本插件。以后升级时运行目标版本的同一条命令。
+
+**从原 GitHub 或 ZIP 入口切换：** Codex 不允许同名 marketplace 同时登记两个来源。
+先运行下面的命令，再运行上面的 `npx` 命令；此步骤会暂时移除插件，请连续完成安装后再开新聊天：
+
+```sh
+codex plugin marketplace remove stop-pushing-shit
+```
+
+切回 GitHub / ZIP 时也先移除同名 marketplace，再按对应步骤安装。
+
+## 从 GitHub 安装（备用）
 
 在已安装 Codex 的终端运行：
 
@@ -17,9 +40,9 @@ codex plugin add issue-pr-guard@stop-pushing-shit
 
 无需另装 Python、Go、Node 或启动服务；原生 Windows 需要支持 `commandWindows` 的 Codex。
 
-## 从 ZIP 安装（可选）
+## 从 GitHub Release 安装（离线备用）
 
-如果 [GitHub Release](https://github.com/321sssrt-bit/STOP-PUSHING-SHIT/releases) 附带 ZIP，可以下载对应平台的 `STOP-PUSHING-SHIT-0.1.0-<平台>.zip`：
+从 [Codex 0.1.1 Release](https://github.com/321sssrt-bit/STOP-PUSHING-SHIT/releases/tag/codex-v0.1.1) 下载对应平台的 `STOP-PUSHING-SHIT-0.1.1-<平台>.zip`：
 
 | 设备 | 平台 |
 |---|---|
@@ -37,6 +60,9 @@ codex plugin add issue-pr-guard@stop-pushing-shit
 ```
 
 安装后同样需要开启新聊天，在 `/hooks` 中审阅并信任插件。单平台 ZIP 只携带对应设备的程序；`universal` 包包含五个平台程序，保留作可选离线合集。
+
+Release 另附 `codex-stop-pushing-shit-0.1.1.tgz`，与 npm 发布使用同一个文件。
+ZIP 安装不依赖 npm 或 Node.js；npm 包和 ZIP 使用相同版本的 Hook 与程序。
 
 ## 授权与卸载
 

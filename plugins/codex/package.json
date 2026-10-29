@@ -1,0 +1,16 @@
+{
+  "name": "codex-stop-pushing-shit",
+  "version": "0.1.1",
+  "description": "Install STOP-PUSHING-SHIT: explicit human authorization before recognized GitHub writes and git pushes.",
+  "type": "module",
+  "bin": { "codex-stop-pushing-shit": "cli.mjs" },
+  "files": ["cli.mjs", "marketplace", "README.md", "LICENSE", "THIRD_PARTY_NOTICES.txt"],
+  "engines": { "node": ">=22" },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/321sssrt-bit/STOP-PUSHING-SHIT.git",
+    "directory": "plugins/codex"
+  },
+  "publishConfig": { "access": "public", "registry": "https://registry.npmjs.org/" }
+}

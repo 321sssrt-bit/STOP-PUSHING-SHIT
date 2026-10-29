@@ -54,13 +54,17 @@ Changed content or a failed attempt requires fresh authorization. "Continue," "f
 Give your agent these commands:
 
 ```sh
-codex plugin marketplace add 321sssrt-bit/STOP-PUSHING-SHIT --ref main --sparse .agents/plugins --sparse plugins/codex
-codex plugin add issue-pr-guard@stop-pushing-shit
+npx --yes codex-stop-pushing-shit@0.1.1
 ```
 
 Start a new chat after installation. Open `/hooks` to review and trust the plugin's hooks.
 
-No Python, Go, Node, or separate service is required.
+Requires Codex, Node.js 22+, and npm. No Python, Go, or separate service is required.
+When switching from GitHub or ZIP, first run `codex plugin marketplace remove stop-pushing-shit`,
+then immediately run the command above and review the hooks in a new chat.
+
+**Fallbacks:** [GitHub marketplace](plugins/codex/INSTALL.md) and [GitHub Release ZIPs](https://github.com/321sssrt-bit/STOP-PUSHING-SHIT/releases/tag/codex-v0.1.1)
+remain available without npm or Node.js. The release also stores the exact `.tgz` published to npm.
 
 For disabling or uninstalling the plugin, see the [installation guide (Chinese)](plugins/codex/INSTALL.md). To uninstall directly:
 
@@ -70,7 +74,15 @@ codex plugin remove issue-pr-guard@stop-pushing-shit
 
 Uninstalling does not automatically delete local state, which may contain a pending request's body.
 
-**DSH users:** Download the matching `.tgz` from the [DSH 0.1.1 release](https://github.com/321sssrt-bit/STOP-PUSHING-SHIT/releases/tag/dsh-v0.1.1), then follow the [DSH installation guide](plugins/dsh/README.md). Supported targets are macOS ARM64, Linux ARM64, and Windows x64. DSH requires an existing DSH, Node.js, and Git installation.
+**DSH users:** Install into the profile you actually use (`web` below):
+
+```sh
+dsh plugin --profile web add dsh-stop-pushing-shit@0.1.2
+```
+
+Requires DSH, Node.js 24.9+, pnpm, and Git. Supports macOS ARM64, Linux ARM64, and Windows x64.
+The [DSH 0.1.2 release](https://github.com/321sssrt-bit/STOP-PUSHING-SHIT/releases/tag/dsh-v0.1.2)
+retains the exact npm tarball and per-platform offline packages. See the [DSH installation guide](plugins/dsh/README.md).
 
 ## Final provisions
 

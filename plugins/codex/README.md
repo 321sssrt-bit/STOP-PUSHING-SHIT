@@ -1,8 +1,8 @@
 # Codex 首版
 
-当前版本为 **0.1.0**，以 [.codex-plugin/plugin.json](.codex-plugin/plugin.json) 为准。安装步骤见 [INSTALL.md](INSTALL.md)，验收结果与边界见[验证说明](../../docs/verification.md)。
+当前版本为 **0.1.1**，以 [.codex-plugin/plugin.json](.codex-plugin/plugin.json) 为准，npm 的 [package.json](package.json) 必须与它一致。安装步骤见 [INSTALL.md](INSTALL.md)，验收结果与边界见[验证说明](../../docs/verification.md)。
 
-安装形态采用 Codex 社区 marketplace，正式入口为 GitHub 仓库的 `main` 分支，具体命令见 [INSTALL.md](INSTALL.md)。该分发入口携带五个平台的原生程序，由启动脚本选择。`dist/codex/` 是本地 ZIP 打包输出目录；独立 ZIP 以 [GitHub Releases](https://github.com/321sssrt-bit/STOP-PUSHING-SHIT/releases) 中列出的附件为准。用户端无需增加语言运行时或服务。
+推荐 `npx --yes codex-stop-pushing-shit@0.1.1`，需要 Node.js 22+；安装器将包内 marketplace 保存到 Codex 配置目录，再调用 Codex 自带的安装命令。Hook 运行仍使用原生程序。GitHub `main` marketplace 与 Release ZIP 保留为不依赖 Node.js 的备用入口。三个入口携带相同的 Hook 和程序，由启动脚本选择平台。
 
 | 源文件 | 用途 |
 |---|---|

@@ -1,13 +1,19 @@
 # 安装入口
 
-首版面向 **Codex**，正式 GitHub 安装命令：
+**Codex** 推荐从 npm 安装（已有 Codex、Node.js 22+ 和 npm）：
 
 ```sh
-codex plugin marketplace add 321sssrt-bit/STOP-PUSHING-SHIT --ref main --sparse .agents/plugins --sparse plugins/codex
-codex plugin add issue-pr-guard@stop-pushing-shit
+npx --yes codex-stop-pushing-shit@0.1.1
 ```
 
-装好后开启新聊天，在 `/hooks` 中审阅并信任插件。完整步骤、可选 ZIP 安装和卸载见[安装说明](plugins/codex/INSTALL.md)；英文步骤见 [English README](README.en.md#iii-installation)。无需另装 Go、Python、Node 或启动服务。
+装好后开启新聊天，在 `/hooks` 中审阅并信任插件。旧 GitHub / ZIP 用户先按[安装说明](plugins/codex/INSTALL.md)切换来源；英文步骤见 [English README](README.en.md#iii-installation)。GitHub marketplace 和 [Codex Release ZIP](https://github.com/321sssrt-bit/STOP-PUSHING-SHIT/releases/tag/codex-v0.1.1) 继续保留，使用这两种方式无需 Node.js 或 npm。
 
-DSH 原生插件安装包见 [DSH 0.1.1 Release](https://github.com/321sssrt-bit/STOP-PUSHING-SHIT/releases/tag/dsh-v0.1.1)，本地构建输出位于 `dist/dsh/`；平台选择、安装、停用和卸载见
-[DSH 安装说明](plugins/dsh/README.md)。DSH 包需要宿主已有 Node.js，与 Codex 的 ZIP 包分开使用。
+**DSH** 推荐从 npm 安装到实际使用的 profile：
+
+```sh
+dsh plugin --profile web add dsh-stop-pushing-shit@0.1.2
+```
+
+需要已有 DSH、Node.js 24.9+、pnpm 和 Git；备用包见 [DSH 0.1.2 Release](https://github.com/321sssrt-bit/STOP-PUSHING-SHIT/releases/tag/dsh-v0.1.2)。安装、停用和卸载见 [DSH 安装说明](plugins/dsh/README.md)。
+
+两个宿主独立版本，不能混装。每个 Release 都附带与对应 npm 版本完全相同的 `.tgz`，并保留原有分平台离线包。
