@@ -3,10 +3,10 @@
 **Codex** 推荐从 npm 安装（已有 Codex、Node.js 22+ 和 npm）：
 
 ```sh
-npx --yes codex-stop-pushing-shit@0.1.2
+npx --yes codex-stop-pushing-shit@0.1.3
 ```
 
-装好后开启新聊天，在 `/hooks` 中审阅并信任插件。旧 GitHub / ZIP 用户先按[安装说明](plugins/codex/INSTALL.md)切换来源；英文步骤见 [English README](README.en.md#iii-installation)。GitHub marketplace 和 [Codex Release ZIP](https://github.com/321sssrt-bit/STOP-PUSHING-SHIT/releases/tag/codex-v0.1.2) 继续保留，使用这两种方式无需 Node.js 或 npm。
+装好后开启新聊天，在 `/hooks` 中审阅并信任插件。旧 GitHub / ZIP 用户先按[安装说明](plugins/codex/INSTALL.md)切换来源；英文步骤见 [English README](README.en.md#iii-installation)。GitHub marketplace 和 [Codex Release ZIP](https://github.com/321sssrt-bit/STOP-PUSHING-SHIT/releases/tag/codex-v0.1.3) 继续保留，使用这两种方式无需 Node.js 或 npm。
 
 **DSH** 推荐从 npm 安装到实际使用的 profile：
 

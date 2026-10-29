@@ -48,7 +48,7 @@
 把下面的命令发给你的 Agent：
 
 ```sh
-npx --yes codex-stop-pushing-shit@0.1.2
+npx --yes codex-stop-pushing-shit@0.1.3
 ```
 
 装好后开一个新聊天，在 `/hooks` 里审阅并信任本插件的 Hook。
@@ -56,7 +56,7 @@ npx --yes codex-stop-pushing-shit@0.1.2
 需要已有 Codex、Node.js 22+ 和 npm；无需 Python、Go，也不用单独启动服务。
 已从 GitHub 或 ZIP 安装的用户，先按[切换来源说明](plugins/codex/INSTALL.md)移除旧 marketplace，再运行上面的命令。
 
-**备用安装：** 保留 [GitHub marketplace](plugins/codex/INSTALL.md#从-github-安装备用) 和 [GitHub Release ZIP](https://github.com/321sssrt-bit/STOP-PUSHING-SHIT/releases/tag/codex-v0.1.2)，不依赖 npm 或 Node.js。Release 同时保存与 npm 完全相同的 `.tgz`。
+**备用安装：** 保留 [GitHub marketplace](plugins/codex/INSTALL.md#从-github-安装备用) 和 [GitHub Release ZIP](https://github.com/321sssrt-bit/STOP-PUSHING-SHIT/releases/tag/codex-v0.1.3)，不依赖 npm 或 Node.js。Release 同时保存与 npm 完全相同的 `.tgz`。
 
 要停用或卸载，见[卸载说明](plugins/codex/INSTALL.md)。
 

@@ -54,7 +54,7 @@ Changed content or a failed attempt requires fresh authorization. "Continue," "f
 Give your agent these commands:
 
 ```sh
-npx --yes codex-stop-pushing-shit@0.1.2
+npx --yes codex-stop-pushing-shit@0.1.3
 ```
 
 Start a new chat after installation. Open `/hooks` to review and trust the plugin's hooks.
@@ -63,7 +63,7 @@ Requires Codex, Node.js 22+, and npm. No Python, Go, or separate service is requ
 When switching from GitHub or ZIP, first run `codex plugin marketplace remove stop-pushing-shit`,
 then immediately run the command above and review the hooks in a new chat.
 
-**Fallbacks:** [GitHub marketplace](plugins/codex/INSTALL.md) and [GitHub Release ZIPs](https://github.com/321sssrt-bit/STOP-PUSHING-SHIT/releases/tag/codex-v0.1.2)
+**Fallbacks:** [GitHub marketplace](plugins/codex/INSTALL.md) and [GitHub Release ZIPs](https://github.com/321sssrt-bit/STOP-PUSHING-SHIT/releases/tag/codex-v0.1.3)
 remain available without npm or Node.js. The release also stores the exact `.tgz` published to npm.
 
 For disabling or uninstalling the plugin, see the [installation guide (Chinese)](plugins/codex/INSTALL.md). To uninstall directly:

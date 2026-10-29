@@ -13,6 +13,6 @@
 - [npm 与 Release 发布](npm-release.md)：同版本、同程序、同一份 npm 安装包。
 - [npm 分发验证](npm-verification-2026-10-29.md)：包一致性、实际安装和本轮边界。
 
-当前 Codex 版本为 0.1.2，DSH 版本为 0.1.3，采用 [MIT 许可证](../LICENSE)。推荐 npm 安装；GitHub marketplace 与 [GitHub Releases](https://github.com/321sssrt-bit/STOP-PUSHING-SHIT/releases) 中的离线包继续保留，见[安装说明](../INSTALL.md)。
+当前 Codex 版本为 0.1.3，DSH 版本为 0.1.3，采用 [MIT 许可证](../LICENSE)。推荐 npm 安装；GitHub marketplace 与 [GitHub Releases](https://github.com/321sssrt-bit/STOP-PUSHING-SHIT/releases) 中的离线包继续保留，见[安装说明](../INSTALL.md)。
 
 正式首页提供[简体中文](../README.md)与 [English](../README.en.md)。本地制作资料、历史源码、验收报告和原始证据不随安装包分发。

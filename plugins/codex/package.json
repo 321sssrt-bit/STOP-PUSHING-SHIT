@@ -1,6 +1,6 @@
 {
   "name": "codex-stop-pushing-shit",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Install STOP-PUSHING-SHIT: explicit human authorization before recognized GitHub writes and git pushes.",
   "type": "module",
   "bin": { "codex-stop-pushing-shit": "cli.mjs" },
